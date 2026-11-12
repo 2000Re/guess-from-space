@@ -1,0 +1,11 @@
+Guess From Space is a geography quiz you can play in 15 seconds.
+
+Each video starts with a close-up satellite image of a famous place, then zooms out while you choose from three answers. Can you recognize Venice, Mount Fuji or the Palm Jumeirah from space?
+
+🌍 New quizzes every day
+🛰️ World Heritage Sites, volcanoes, islands, cities and natural wonders
+💬 Comment your guess before the answer, and tell us your score!
+
+Play every quiz on the website: https://2000re.github.io/guess-from-space/
+
+Satellite images: Sentinel-2 cloudless 2016 by EOX IT Services GmbH (https://s2maps.eu) · Contains modified Copernicus Sentinel data 2016 · CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). The images show the Earth as of 2016. This channel is not affiliated with or endorsed by EOX, ESA or the European Commission.

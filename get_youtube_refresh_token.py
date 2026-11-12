@@ -1,0 +1,95 @@
+"""新チャンネル用のリフレッシュトークンを取得する(ローカルPCで一度だけ実行)。
+
+事前準備(詳しくは README):
+  1. Google Cloud Console で YouTube Data API v3 を有効化
+  2. OAuth同意画面を作成し、公開ステータスを「本番環境」にする
+     (「テスト」のままだとリフレッシュトークンが7日で失効する)
+  3. OAuthクライアントID(種類: デスクトップアプリ)を作成し、JSONをダウンロード
+
+使い方:
+  pip install google-auth-oauthlib
+  python3 get_youtube_refresh_token.py client_secret_xxx.json
+
+ブラウザが開いたら、アカウント選択で必ず Guess From Space のチャンネル(@guess-from-space)を選ぶ。
+最後に表示される値を GitHub Secrets に登録する。
+"""
+import json
+import sys
+import urllib.error
+import urllib.request
+
+from google_auth_oauthlib.flow import InstalledAppFlow
+
+SCOPES = [
+    "https://www.googleapis.com/auth/youtube.upload",
+    "https://www.googleapis.com/auth/youtube.readonly",  # 投稿先チャンネルの確認用
+]
+
+
+HINTS = {
+    "accessNotConfigured": "この OAuth クライアントのプロジェクトで YouTube Data API v3 が有効になっていません。\n"
+                           "  Google Cloud Console で、OAuth クライアントと同じプロジェクトを選び、"
+                           "「API とサービス」→「ライブラリ」→ YouTube Data API v3 →「有効にする」。\n"
+                           "  有効にしてから反映まで数分かかることがあります。",
+    "SERVICE_DISABLED": None,  # accessNotConfigured と同じ
+    "insufficientPermissions": "YouTube を読む権限が許可されていません。ブラウザの許可画面で、"
+                               "すべての項目にチェックを入れて「続行」してください。\n"
+                               "  また、OAuth 同意画面のスコープ(データアクセス)に youtube.readonly が"
+                               "入っているか確認してください。",
+    "ACCESS_TOKEN_SCOPE_INSUFFICIENT": None,  # insufficientPermissions と同じ
+    "youtubeSignupRequired": "選んだアカウントに YouTube チャンネルがありません。"
+                             "アカウント選択で Guess From Space のチャンネルを選んでください。",
+}
+HINTS["SERVICE_DISABLED"] = HINTS["accessNotConfigured"]
+HINTS["ACCESS_TOKEN_SCOPE_INSUFFICIENT"] = HINTS["insufficientPermissions"]
+
+
+def explain_error(e):
+    """YouTube API のエラーの理由を表示する(トークンなどの秘密の値は表示しない)。"""
+    body = e.read().decode("utf-8", "replace")
+    try:
+        err = json.loads(body).get("error", {})
+    except ValueError:
+        err = {}
+    reasons = [x.get("reason") for x in err.get("errors", []) if x.get("reason")]
+    reasons += [d.get("reason") for d in err.get("details", []) if isinstance(d, dict) and d.get("reason")]
+    print(f"\nチャンネルの確認に失敗しました(HTTP {e.code})")
+    print("理由:", ", ".join(reasons) or "(不明)")
+    print("メッセージ:", err.get("message") or body[:500])
+    for r in reasons:
+        if HINTS.get(r):
+            print("\n対処:", HINTS[r])
+            break
+    print("\n直したら、もう一度このスクリプトを実行してください。")
+
+
+def main():
+    if len(sys.argv) != 2:
+        sys.exit(__doc__)
+    flow = InstalledAppFlow.from_client_secrets_file(sys.argv[1], SCOPES)
+    # prompt=consent を付けないと、2回目以降はリフレッシュトークンが返らないことがある
+    creds = flow.run_local_server(port=0, access_type="offline", prompt="consent")
+
+    req = urllib.request.Request(
+        "https://www.googleapis.com/youtube/v3/channels?part=snippet&mine=true",
+        headers={"Authorization": f"Bearer {creds.token}"})
+    try:
+        items = json.loads(urllib.request.urlopen(req).read()).get("items", [])
+    except urllib.error.HTTPError as e:
+        explain_error(e)
+        sys.exit(1)
+    if not items:
+        sys.exit("このアカウントにはYouTubeチャンネルがありません。アカウント選択をやり直してください。")
+    channel = items[0]
+
+    print("\n認証したチャンネル:", channel["snippet"]["title"])
+    print("※ Guess From Space 以外のチャンネルになっていたら、選ぶアカウントが違います。やり直してください。\n")
+    print("GitHub Secrets に登録する値:")
+    print(f"  YT_CLIENT_ID      = {creds.client_id}")
+    print(f"  YT_CLIENT_SECRET  = {creds.client_secret}")
+    print(f"  YT_REFRESH_TOKEN  = {creds.refresh_token}")
+    print(f"  YT_CHANNEL_ID     = {channel['id']}")
+
+
+if __name__ == "__main__":
+    main()
