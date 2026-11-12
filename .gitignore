@@ -1,5 +1,7 @@
 tile_cache/
 out/
+check/
 *.wav
+*.part
 __pycache__/
 client_secret*.json
