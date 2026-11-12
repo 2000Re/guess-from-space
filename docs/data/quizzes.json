@@ -16,5 +16,23 @@
   ],
   "answer": 2,
   "image": "img/1-great-blue-hole.jpg"
+ },
+ {
+  "number": 2,
+  "slug": "2-mount-kilimanjaro",
+  "video_id": "b3xgI6RyH4g",
+  "uploaded_at": "2026-11-12T22:50:35+00:00",
+  "name": "Mount Kilimanjaro",
+  "country": "Tanzania",
+  "note": "The highest mountain in Africa",
+  "lon": 37.3556,
+  "lat": -3.0674,
+  "choices": [
+   "Mount Kenya",
+   "Mount Kilimanjaro",
+   "Mount Meru"
+  ],
+  "answer": 1,
+  "image": "img/2-mount-kilimanjaro.jpg"
  }
 ]
