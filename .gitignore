@@ -1,0 +1,5 @@
+tile_cache/
+out/
+*.wav
+__pycache__/
+client_secret*.json
