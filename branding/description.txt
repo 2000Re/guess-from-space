@@ -1,4 +1,4 @@
-Guess From Space is a geography quiz you can play in 15 seconds.
+Guess From Space is a geography quiz you can play in 20 seconds.
 
 Each video starts with a close-up satellite image of a famous place, then zooms out while you choose from three answers. Can you recognize Venice, Mount Fuji or the Palm Jumeirah from space?
 
