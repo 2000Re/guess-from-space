@@ -52,5 +52,23 @@
   ],
   "answer": 2,
   "image": "img/3-cape-cod.jpg"
+ },
+ {
+  "number": 4,
+  "slug": "4-lake-atitlan",
+  "video_id": "rctyQg0LibA",
+  "uploaded_at": "2026-11-13T22:50:25+00:00",
+  "name": "Lake Atitlán",
+  "country": "Guatemala",
+  "note": "A volcanic lake ringed by three volcanoes",
+  "lon": -91.19,
+  "lat": 14.69,
+  "choices": [
+   "Lake Atitlán",
+   "Lake Titicaca",
+   "Lake Toba"
+  ],
+  "answer": 0,
+  "image": "img/4-lake-atitlan.jpg"
  }
 ]
