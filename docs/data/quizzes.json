@@ -34,5 +34,23 @@
   ],
   "answer": 1,
   "image": "img/2-mount-kilimanjaro.jpg"
+ },
+ {
+  "number": 3,
+  "slug": "3-cape-cod",
+  "video_id": "gVRSowdMoOo",
+  "uploaded_at": "2026-11-13T10:50:15+00:00",
+  "name": "Cape Cod",
+  "country": "United States",
+  "note": "A hook-shaped peninsula",
+  "lon": -70.18,
+  "lat": 42.05,
+  "choices": [
+   "Long Island",
+   "Outer Banks",
+   "Cape Cod"
+  ],
+  "answer": 2,
+  "image": "img/3-cape-cod.jpg"
  }
 ]
