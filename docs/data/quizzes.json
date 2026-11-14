@@ -88,5 +88,23 @@
   ],
   "answer": 1,
   "image": "img/5-lisbon.jpg"
+ },
+ {
+  "number": 6,
+  "slug": "6-palm-jumeirah",
+  "video_id": "npkO3GPVzz4",
+  "uploaded_at": "2026-11-14T22:51:32+00:00",
+  "name": "Palm Jumeirah",
+  "country": "United Arab Emirates",
+  "note": "An artificial island shaped like a palm tree",
+  "lon": 55.1385,
+  "lat": 25.115,
+  "choices": [
+   "The Pearl-Qatar",
+   "Durrat Al Bahrain",
+   "Palm Jumeirah"
+  ],
+  "answer": 2,
+  "image": "img/6-palm-jumeirah.jpg"
  }
 ]
