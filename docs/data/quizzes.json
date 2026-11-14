@@ -70,5 +70,23 @@
   ],
   "answer": 0,
   "image": "img/4-lake-atitlan.jpg"
+ },
+ {
+  "number": 5,
+  "slug": "5-lisbon",
+  "video_id": "4V4JJ9rAFfs",
+  "uploaded_at": "2026-11-14T10:50:23+00:00",
+  "name": "Lisbon",
+  "country": "Portugal",
+  "note": "The capital of Portugal, on the Tagus estuary",
+  "lon": -9.14,
+  "lat": 38.7,
+  "choices": [
+   "San Francisco",
+   "Lisbon",
+   "Porto"
+  ],
+  "answer": 1,
+  "image": "img/5-lisbon.jpg"
  }
 ]
