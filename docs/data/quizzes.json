@@ -124,5 +124,23 @@
   ],
   "answer": 0,
   "image": "img/7-santorini.jpg"
+ },
+ {
+  "number": 8,
+  "slug": "8-vancouver",
+  "video_id": "wUQrcldNysI",
+  "uploaded_at": "2026-11-15T22:50:36+00:00",
+  "name": "Vancouver",
+  "country": "Canada",
+  "note": "Home to Stanley Park",
+  "lon": -123.14,
+  "lat": 49.3,
+  "choices": [
+   "Vancouver",
+   "San Francisco",
+   "Seattle"
+  ],
+  "answer": 0,
+  "image": "img/8-vancouver.jpg"
  }
 ]
