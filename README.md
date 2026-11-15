@@ -5,9 +5,9 @@
 
 - サイト: https://2000re.github.io/guess-from-space/ (GitHub Pages、`docs/`)
 - 動画の中の問い: 「Where on Earth is this?」
-- YouTube の題名: 「[番号] 」のあとに3つの型を番号順に回す(2026-11-15〜、#7 から。`make_video.py` の `TITLES`)。
-  「Where on Earth is this? 🌍 Satellite Quiz」(classic。#6 まではすべてこれ)、
-  「Can you name this place from space? 🛰️」(space)、「Guess the place from this satellite photo 🌍」(photo)。
+- YouTube の題名: 「[番号] 」のあとに12の型を番号順に回し、毎回ちがう題名にする(#7 から。`make_video.py` の `TITLES`)。
+  例:「Where on Earth is this? 🌍 Satellite Quiz」(classic。#6 まではすべてこれ)、「Can you name this place from space? 🛰️」、
+  「This photo is only 3 km wide. Where on Earth is it? 🛰️」(冒頭の写真の幅 = places.py の start)、「Geography pros: where on Earth is this? 🌍」。
   答えのヒントになる地域名は入れない。型は `upload_history.json` の `title_style` に残り、`stats.md` で比べられる
 
 ## 動画の構成(縦 1080x1920、15〜18秒)

@@ -357,12 +357,28 @@ TITLES = [
     ("classic", "Where on Earth is this? 🌍 Satellite Quiz"),
     ("space", "Can you name this place from space? 🛰️"),
     ("photo", "Guess the place from this satellite photo 🌍"),
+    ("width", "This photo is only {km} km wide. Where on Earth is it? 🛰️"),
+    ("orbit", "Seen from orbit: can you tell where this is? 🛰️"),
+    ("zoom", "Zoom out and guess the place 🌍"),
+    ("famous", "A famous place seen from space. Can you name it? 🛰️"),
+    ("pros", "Geography pros: where on Earth is this? 🌍"),
+    ("five_seconds", "Can you name this place in 5 seconds? 🛰️"),
+    ("above", "What famous place is this, seen from above? 🌍"),
+    ("across", "Just {km} km across. Can you guess this place? 🛰️"),
+    ("map_lovers", "Map lovers: can you recognize this place from space? 🌍"),
 ]
 
 
-def video_title(number):
-    """(題名, 型)。答えは書かない。"""
+def video_title(number, place=None):
+    """(題名, 型)。答えは書かない。番号順に回すので、毎回ちがう題名になる(12本で一周)。
+    {km} は冒頭の写真の幅(places.py の start)。答えの手がかりにはならない。"""
     style, title = TITLES[(number - 1) % len(TITLES)]
+    if "{km}" in title:
+        if not place or not place.get("start"):
+            style, title = TITLES[0]
+        else:
+            km = place["start"]
+            title = title.format(km=f"{km:g}")
     return title, style
 
 
@@ -392,8 +408,8 @@ def youtube_meta(place, labels, correct, number):
     return {
         # 番号を先頭に(スマホの YouTube Studio の一覧でタイトルが切れても番号が見えるように)。
         # 「#15」だとハッシュタグ扱いされることがあるので「[15]」にする
-        "title": _yt(f"[{number}] {video_title(number)[0]}")[:100],
-        "title_style": video_title(number)[1],
+        "title": _yt(f"[{number}] {video_title(number, place)[0]}")[:100],
+        "title_style": video_title(number, place)[1],
         "description": _yt("\n".join(lines))[:4900],
         "tags": tags,
         "answer": answer,
