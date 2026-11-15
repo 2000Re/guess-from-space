@@ -1,28 +1,36 @@
 # 再生数のまとめ
 
-`stats.py` が毎日作り直す(最終更新 2026-11-15 09:38 JST)。比べるのは投稿から約3日目の再生数(古い動画ほど多くなるのをそろえるため)。「最新の平均」は投稿からの日数がそろっていないので参考。
+`stats.py` が毎日作り直す(最終更新 2026-11-16 07:48 JST)。比べるのは投稿から約3日目の再生数(古い動画ほど多くなるのをそろえるため)。「最新の平均」は投稿からの日数がそろっていないので参考。
 
 ## 全体
 
 | 値 | 3日目の本数 | 平均 | 中央値 | 最新の本数 | 最新の平均(参考) |
 |---|---:|---:|---:|---:|---:|
-| すべて | 0 |  |  | 6 | 506 |
+| すべて | 1 | 15 | 15 | 7 | 613 |
+
+## title_style
+
+| 値 | 3日目の本数 | 平均 | 中央値 | 最新の本数 | 最新の平均(参考) |
+|---|---:|---:|---:|---:|---:|
+| (なし) | 1 | 15 | 15 | 6 | 600 |
+| famous | 0 |  |  | 1 | 695 |
 
 ## 投稿の時間帯
 
 | 値 | 3日目の本数 | 平均 | 中央値 | 最新の本数 | 最新の平均(参考) |
 |---|---:|---:|---:|---:|---:|
-| 07時台 | 0 |  |  | 3 | 279 |
-| 19時台 | 0 |  |  | 2 | 1090 |
-| 21時台 | 0 |  |  | 1 | 15 |
+| 21時台 | 1 | 15 | 15 | 1 | 15 |
+| 07時台 | 0 |  |  | 3 | 434 |
+| 19時台 | 0 |  |  | 3 | 992 |
 
 ## 動画ごと(新しい順)
 
 | # | 答え | 投稿(JST) | 1日目 | 3日目 | 7日目 | 最新 | 高評価 | コメント |
 |---:|---|---|---:|---:|---:|---:|---:|---:|
-| [6](https://youtube.com/shorts/npkO3GPVzz4) | Palm Jumeirah | 11-15 07:51 |  |  |  | 241 | 1 | 0 |
-| [5](https://youtube.com/shorts/4V4JJ9rAFfs) | Lisbon | 11-14 19:50 |  |  |  | 1084 | 6 | 0 |
-| [4](https://youtube.com/shorts/rctyQg0LibA) | Lake Atitlán | 11-14 07:50 | 216 |  |  | 216 | 2 | 0 |
-| [3](https://youtube.com/shorts/gVRSowdMoOo) | Cape Cod | 11-13 19:50 | 1096 |  |  | 1096 | 7 | 0 |
-| [2](https://youtube.com/shorts/b3xgI6RyH4g) | Mount Kilimanjaro | 11-13 07:50 | 381 |  |  | 381 | 2 | 0 |
-| [1](https://youtube.com/shorts/18cfQg4Jl6A) | Great Blue Hole | 11-12 21:30 |  |  |  | 15 | 0 | 0 |
+| [7](https://youtube.com/shorts/47QAQ1mAxsc) | Santorini | 11-15 19:49 |  |  |  | 695 | 3 | 0 |
+| [6](https://youtube.com/shorts/npkO3GPVzz4) | Palm Jumeirah | 11-15 07:51 |  |  |  | 466 | 2 | 0 |
+| [5](https://youtube.com/shorts/4V4JJ9rAFfs) | Lisbon | 11-14 19:50 | 1089 |  |  | 1089 | 6 | 0 |
+| [4](https://youtube.com/shorts/rctyQg0LibA) | Lake Atitlán | 11-14 07:50 | 216 |  |  | 446 | 5 | 0 |
+| [3](https://youtube.com/shorts/gVRSowdMoOo) | Cape Cod | 11-13 19:50 | 1096 |  |  | 1192 | 12 | 0 |
+| [2](https://youtube.com/shorts/b3xgI6RyH4g) | Mount Kilimanjaro | 11-13 07:50 | 381 |  |  | 391 | 2 | 0 |
+| [1](https://youtube.com/shorts/18cfQg4Jl6A) | Great Blue Hole | 11-12 21:30 |  | 15 |  | 15 | 0 | 0 |
