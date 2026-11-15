@@ -5,6 +5,10 @@
 
 - サイト: https://2000re.github.io/guess-from-space/ (GitHub Pages、`docs/`)
 - 動画の中の問い: 「Where on Earth is this?」
+- YouTube の題名: 「[番号] 」のあとに3つの型を番号順に回す(2026-11-15〜、#7 から。`make_video.py` の `TITLES`)。
+  「Where on Earth is this? 🌍 Satellite Quiz」(classic。#6 まではすべてこれ)、
+  「Can you name this place from space? 🛰️」(space)、「Guess the place from this satellite photo 🌍」(photo)。
+  答えのヒントになる地域名は入れない。型は `upload_history.json` の `title_style` に残り、`stats.md` で比べられる
 
 ## 動画の構成(縦 1080x1920、15〜18秒)
 
@@ -157,6 +161,10 @@ GitHub の `schedule` は数時間遅れるので使わない。cron-job.org か
   投稿が再開すると次の確認で自動で閉じる。変数 `AUTO_POST` が `true` でないときは調べない
 - **再生数の記録**(`stats.py`): 全動画の再生数・高評価・コメント数を YouTube Data API で取り、`stats.json` に残す。
   比べやすいよう、投稿から1日・3日・7日の時点の値を固定して残す(この仕組みより前の動画は最新の値だけ)。
-  `stats.md` に、`upload_history.json` の項目(版・カテゴリ・形式・美術館など、あるもの)と投稿の時間帯ごとの
+  `stats.md` に、`upload_history.json` の項目(題名の型・版・カテゴリ・形式・美術館など、あるもの)と投稿の時間帯ごとの
   3日目の再生数の平均・中央値をまとめる。使う Secrets は投稿と同じ(`YT_CLIENT_ID`・`YT_CLIENT_SECRET`・`YT_REFRESH_TOKEN`)
-- `stats.py` と `watchdog.py` は4チャンネル(Painted When?、Guess From Space、Wait, That Big?、Too Close to Tell)で同じファイル
+- **共通ファイルのずれ**(`sync_check.py`): 4つのリポジトリの main を読み比べ、同じであるべきファイル
+  (`stats.py`・`watchdog.py`・`sync_check.py`・`daily-check.yml`)が違えば sync ジョブを失敗にする。
+  似ているファイル(`youtube_upload.py`・`posted_today.py` など)は、違う行数を Summary に並べる。
+  1つで不具合を直したら、ほかの3つにも同じ直しが要るかを見る。中身は `python sync_check.py --diff youtube_upload.py`
+- `stats.py`・`watchdog.py`・`sync_check.py` は4チャンネル(Painted When?、Guess From Space、Wait, That Big?、Too Close to Tell)で同じファイル

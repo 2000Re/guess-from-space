@@ -351,6 +351,21 @@ def _yt(s):
     return str(s).replace("<", "‹").replace(">", "›")
 
 
+# 題名の型。番号順に回す。どの型だったかは upload_history.json の title_style に残り、stats.md で比べる。
+# 地域名(in Europe など)は、外れの選択肢が別の地域だと答えが絞れてしまうので入れない
+TITLES = [
+    ("classic", "Where on Earth is this? 🌍 Satellite Quiz"),
+    ("space", "Can you name this place from space? 🛰️"),
+    ("photo", "Guess the place from this satellite photo 🌍"),
+]
+
+
+def video_title(number):
+    """(題名, 型)。答えは書かない。"""
+    style, title = TITLES[(number - 1) % len(TITLES)]
+    return title, style
+
+
 def youtube_meta(place, labels, correct, number):
     answer = labels[correct]
     lines = [
@@ -377,7 +392,8 @@ def youtube_meta(place, labels, correct, number):
     return {
         # 番号を先頭に(スマホの YouTube Studio の一覧でタイトルが切れても番号が見えるように)。
         # 「#15」だとハッシュタグ扱いされることがあるので「[15]」にする
-        "title": _yt(f"[{number}] Where on Earth is this? 🌍 Satellite Quiz")[:100],
+        "title": _yt(f"[{number}] {video_title(number)[0]}")[:100],
+        "title_style": video_title(number)[1],
         "description": _yt("\n".join(lines))[:4900],
         "tags": tags,
         "answer": answer,
