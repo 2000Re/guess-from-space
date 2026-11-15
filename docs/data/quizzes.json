@@ -106,5 +106,23 @@
   ],
   "answer": 2,
   "image": "img/6-palm-jumeirah.jpg"
+ },
+ {
+  "number": 7,
+  "slug": "7-santorini",
+  "video_id": "47QAQ1mAxsc",
+  "uploaded_at": "2026-11-15T10:49:38+00:00",
+  "name": "Santorini",
+  "country": "Greece",
+  "note": "An island ring around a flooded volcanic caldera",
+  "lon": 25.396,
+  "lat": 36.404,
+  "choices": [
+   "Santorini",
+   "Milos",
+   "Mykonos"
+  ],
+  "answer": 0,
+  "image": "img/7-santorini.jpg"
  }
 ]
