@@ -142,5 +142,23 @@
   ],
   "answer": 0,
   "image": "img/8-vancouver.jpg"
+ },
+ {
+  "number": 9,
+  "slug": "9-miami-beach",
+  "video_id": "L3yeKWYTnR4",
+  "uploaded_at": "2026-11-16T10:50:43+00:00",
+  "name": "Miami Beach",
+  "country": "United States",
+  "note": "A city on barrier islands",
+  "lon": -80.13,
+  "lat": 25.79,
+  "choices": [
+   "Miami Beach",
+   "Cancún",
+   "Gold Coast"
+  ],
+  "answer": 0,
+  "image": "img/9-miami-beach.jpg"
  }
 ]
