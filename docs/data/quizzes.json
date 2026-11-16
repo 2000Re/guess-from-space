@@ -160,5 +160,23 @@
   ],
   "answer": 0,
   "image": "img/9-miami-beach.jpg"
+ },
+ {
+  "number": 10,
+  "slug": "10-copenhagen",
+  "video_id": "O8BFDoSR5Ak",
+  "uploaded_at": "2026-11-16T22:52:04+00:00",
+  "name": "Copenhagen",
+  "country": "Denmark",
+  "note": "The capital of Denmark",
+  "lon": 12.57,
+  "lat": 55.676,
+  "choices": [
+   "Oslo",
+   "Stockholm",
+   "Copenhagen"
+  ],
+  "answer": 2,
+  "image": "img/10-copenhagen.jpg"
  }
 ]
