@@ -214,5 +214,23 @@
   ],
   "answer": 0,
   "image": "img/12-london.jpg"
+ },
+ {
+  "number": 13,
+  "slug": "13-lake-taupo",
+  "video_id": "fiZTzsE0NlE",
+  "uploaded_at": "2026-11-18T11:02:17+00:00",
+  "name": "Lake Taupo",
+  "country": "New Zealand",
+  "note": "A lake that fills a supervolcano caldera",
+  "lon": 175.9,
+  "lat": -38.8,
+  "choices": [
+   "Lake Taupo",
+   "Crater Lake",
+   "Lake Toba"
+  ],
+  "answer": 0,
+  "image": "img/13-lake-taupo.jpg"
  }
 ]
