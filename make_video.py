@@ -170,23 +170,42 @@ def choices_for(place, rng):
     return labels, labels.index(place["name"])
 
 
-def script(place, labels):
+# 毎回ちがう言い回し(繰り返しの多い動画に見えないように)。番号で回すので、同じ番号なら作り直しても同じ
+LINES = {
+    "q": [QUESTION, "Can you name this place from space?", "Where in the world is this?", "Which famous place is this?",
+          "Do you recognize this place?"],
+    "lock": ["Lock in your answer!", "Pick your place!", "Got your guess?", "Make your choice!", "Final answer?"],
+    "outro": ["How did you do? Tell me in the comments.", "Did you recognize it?", "Have you been there? Tell me below!",
+              "Were you right? Comment your answer!", "Which place should we fly over next?"],
+}
+LEADS = ["Can you guess the place from space? Comment your answer before the reveal! 🌍",
+         "Name this place before the camera zooms out! 🛰️",
+         "Pause and guess first: where on Earth is this? 🌍",
+         "How well do you know the world from above? Guess the place! 🛰️"]
+
+
+def vary(number, key):
+    opts = LINES[key]
+    return opts[(number + sum(map(ord, key))) % len(opts)]
+
+
+def script(place, labels, number=1):
     return {
-        "q": QUESTION,
+        "q": vary(number, "q"),
         "c0": f"Is it {labels[0]}?", "c1": f"{labels[1]}?", "c2": f"Or {labels[2]}?",
-        "lock": "Lock in your answer!",
+        "lock": vary(number, "lock"),
         "ans": f"It's {P.spoken_name(place)}, {P.where(place)}!",
         "info": place["note"].rstrip(".") + ".",
-        "outro": "How did you do? Tell me in the comments.",
+        "outro": vary(number, "outro"),
     }
 
 
-def build(place, labels, correct, tts, out, stem="quiz"):
+def build(place, labels, correct, tts, out, stem="quiz", number=1):
     """動画を out/<stem>.mp4 に書き、(ファイル名, 長さ, frame 関数) を返す。"""
     start_km = place["start"]
     end_km = place.get("end", P.END_KM)
 
-    lines = script(place, labels)
+    lines = script(place, labels, number)
     clips = {k: tts(t) for k, t in lines.items()}
     dur = {k: len(v) / N.SR for k, v in clips.items()}
     at = {"q": 0.08}
@@ -385,7 +404,7 @@ def video_title(number, place=None):
 def youtube_meta(place, labels, correct, number):
     answer = labels[correct]
     lines = [
-        "Can you guess the place from space? Comment your answer before the reveal! 🌍",
+        LEADS[number % len(LEADS)],
         "",
         "Choices: " + " / ".join(labels),
         "",
@@ -457,7 +476,7 @@ def main():
     print(f"#{number} {place['name']} ({place['country']})  choices: {labels}")
 
     stem = f"{number:04d}-{P.key(place)}"
-    video, seconds, _ = build(place, labels, correct, N.make_tts(args.tts), out, stem)
+    video, seconds, _ = build(place, labels, correct, N.make_tts(args.tts), out, stem, number)
     print(f"{out / video}  {seconds:.1f}s  tiles: {tiles.stats}")
 
     if args.history:

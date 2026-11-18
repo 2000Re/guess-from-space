@@ -4,7 +4,7 @@
   google … Google Cloud Text-to-Speech。API キーは環境変数 GOOGLE_TTS_API_KEY(GitHub Actions など)か、
            Claude Code のクラウド環境の「Network secrets」(texttospeech.googleapis.com への通信に
            X-Goog-Api-Key ヘッダーを自動で付ける。この場合キーはプログラムからは見えない)で渡す。
-           声は GFS_TTS_VOICE(既定 en-US-Chirp3-HD-Charon)、速さは GFS_TTS_RATE(既定 1.1)で変えられる
+           声は GFS_TTS_VOICE(既定 en-US-Chirp3-HD-Kore)、速さは GFS_TTS_RATE(既定 1.1)で変えられる
   dummy  … 通信なし。文の長さから見積もった長さの仮の音(タイミング確認用)
 """
 import base64
@@ -18,7 +18,7 @@ import wave
 import numpy as np
 
 SR = 48000
-DEFAULT_VOICE = "en-US-Chirp3-HD-Charon"
+DEFAULT_VOICE = "en-US-Chirp3-HD-Kore"       # チャンネルごとに声を変える(Painted When? は Charon)
 DEFAULT_RATE = 1.1          # 少し速めに読ませる(Shorts のテンポ)
 TTS_URL = "https://texttospeech.googleapis.com/v1/text:synthesize"
 
