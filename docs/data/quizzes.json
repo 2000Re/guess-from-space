@@ -250,5 +250,23 @@
   ],
   "answer": 2,
   "image": "img/14-stockholm.jpg"
+ },
+ {
+  "number": 15,
+  "slug": "15-the-world-islands",
+  "video_id": "6NzH3-lVnQw",
+  "uploaded_at": "2026-11-19T10:54:47+00:00",
+  "name": "The World Islands",
+  "country": "United Arab Emirates",
+  "note": "Artificial islands laid out like a map of the world",
+  "lon": 55.17,
+  "lat": 25.224,
+  "choices": [
+   "Palm Jebel Ali",
+   "The World Islands",
+   "The Pearl-Qatar"
+  ],
+  "answer": 1,
+  "image": "img/15-the-world-islands.jpg"
  }
 ]
