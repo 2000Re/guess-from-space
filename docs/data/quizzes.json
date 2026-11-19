@@ -232,5 +232,23 @@
   ],
   "answer": 0,
   "image": "img/13-lake-taupo.jpg"
+ },
+ {
+  "number": 14,
+  "slug": "14-stockholm",
+  "video_id": "G5s8hVq_DpY",
+  "uploaded_at": "2026-11-19T04:04:15+00:00",
+  "name": "Stockholm",
+  "country": "Sweden",
+  "note": "A capital city built on islands",
+  "lon": 18.07,
+  "lat": 59.326,
+  "choices": [
+   "Copenhagen",
+   "Helsinki",
+   "Stockholm"
+  ],
+  "answer": 2,
+  "image": "img/14-stockholm.jpg"
  }
 ]
