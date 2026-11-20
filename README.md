@@ -28,6 +28,7 @@
 | `tiles.py` | 衛星画像タイルの取得とキャッシュ(`tile_cache/`)、出典の文言 |
 | `narration.py` | 読み上げ(Google Cloud Text-to-Speech)と効果音 |
 | `youtube_upload.py` | YouTube へのアップロード(標準ライブラリのみ)。`upload_history.json` に記録し、サイトにページを足す |
+| `locales.py` | 題名と説明の翻訳(日本語・スペイン語・フランス語・ドイツ語・ポルトガル語。題名の型ごとの訳。AI は使わない)。投稿のときに一緒に送り、断られたら翻訳なしで投稿する |
 | `posted_today.py` | 定期実行で今投稿してよいか(1日の上限 `MAX_PER_DAY`=2本、間隔 `MIN_GAP_HOURS`=4時間) |
 | `site_gen.py` | サイトの一覧ページ・回ごとのページ・sitemap を作る |
 | `get_youtube_refresh_token.py` | リフレッシュトークンの取得(ローカル PC で一度だけ) |
@@ -49,6 +50,10 @@
 ## 場所のリスト(`places.py`)
 
 今は108か所。数km以上の大きな形で見分けられる世界遺産・有名観光地(島・火山・湖・海岸線・人工島・街の形など)。
+
+- 選び方: まだ出していない場所から選ぶ。直前と同じ国は避ける。**内陸の自然(山・火山・湖・クレーター・峡谷・砂漠・滝など、
+  `places.NATURE` の45か所)は3割**(`make_video.NATURE_SHARE`)、残りは街・海岸・島の形から選ぶ。2026-11-21 の時点で、
+  街・海岸の回(リスボン 1,224、ケープコッド 1,192 など)が、山・湖の回(キリマンジャロ 389、タウポ湖 265 など)より見られていたため
 
 - 入れないもの: 建物単位の名所(10m/画素では小さくてぼやける)、雪や雲で白くなる場所(エベレスト、ウユニ塩湖、
   ペリト・モレノ氷河、ロライマ山は試して外した)、2016年以降にできたもの
@@ -169,3 +174,8 @@ GitHub の `schedule` は数時間遅れるので使わない。cron-job.org か
   似ているファイル(`youtube_upload.py`・`posted_today.py` など)は、違う行数を Summary に並べる。
   1つで不具合を直したら、ほかの3つにも同じ直しが要るかを見る。中身は `python sync_check.py --diff youtube_upload.py`
 - `stats.py`・`watchdog.py`・`sync_check.py` は4チャンネル(Painted When?、Guess From Space、Wait, That Big?、Too Close to Tell)で同じファイル
+
+## 説明欄のリンク(2026-11-21〜)
+
+上級者向け機能で説明欄のリンクがクリックできるようになったので、説明欄の終わりに姉妹チャンネル
+(Wait, That Big?・Painted When?)へのリンクを入れる(`make_video.SISTERS`。閉じる予定の Too Close to Tell は入れない)。
