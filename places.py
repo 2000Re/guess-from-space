@@ -282,6 +282,19 @@ PLACES = [
 ]
 
 
+# 内陸の自然(山・火山・湖・クレーター・峡谷・砂漠・滝など)。街・海岸・島の形より見られにくかったので、出す割合を減らす
+# (make_video.NATURE_SHARE)。島の火山(ストロンボリ・桜島など)は島の形が見えるので入れない
+NATURE = {
+    "mount-vesuvius", "mount-etna", "lake-como", "geirangerfjord", "mount-teide", "mount-ararat", "mount-kilimanjaro",
+    "ngorongoro-crater", "victoria-falls", "sossusvlei", "the-eye-of-the-sahara", "mount-nyiragongo", "mount-damavand",
+    "mount-fuji", "three-gorges-dam", "mount-bromo", "mayon-volcano", "uluru", "wolfe-creek-crater", "mount-taranaki",
+    "tongariro", "milford-sound", "grand-canyon", "horseshoe-bend", "meteor-crater", "crater-lake", "mount-st-helens",
+    "mount-rainier", "niagara-falls", "manicouagan-reservoir", "lake-atitlan", "lencois-maranhenses", "cotopaxi",
+    "lake-garda", "sete-cidades", "mount-pinatubo", "taal-volcano", "mount-batur", "lake-toba", "hutt-lagoon",
+    "lake-taupo", "kilauea", "lake-tahoe", "great-salt-lake", "grand-prismatic-spring",
+}
+
+
 def key(p):
     """投稿記録に使う、場所ごとの決まった名前。"""
     import re

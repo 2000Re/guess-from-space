@@ -27,6 +27,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 import narration as N
 import places as P
+import locales
 import tiles
 
 HERE = Path(__file__).resolve().parent
@@ -345,6 +346,9 @@ def load_history(path):
     return json.loads(p.read_text()) if p and p.exists() else []
 
 
+NATURE_SHARE = 0.3
+
+
 def choose_place(history, rng):
     """まだ出していない場所から選ぶ。直前の回と同じ国は避ける。全部出したら、いちばん前に出した場所から繰り返す。"""
     used = [h["key"] for h in history]
@@ -359,7 +363,13 @@ def choose_place(history, rng):
         order = {k: i for i, k in enumerate(used)}      # 後の回で上書きされる = 最後に出した位置
         fresh = sorted(P.PLACES, key=lambda p: order.get(P.key(p), -1))[: max(1, len(P.PLACES) // 4)]
     pool = [p for p in fresh if p["country"] != last_country] or fresh
-    return rng.choice(pool)
+    # 街・海岸・島の形(リスボン・ケープコッドなど)の方が、山・湖・火山などの内陸の自然より見られていた
+    # (2026-11-21 の stats.md)ので、自然は NATURE_SHARE の割合だけにする
+    nature = [p for p in pool if P.key(p) in P.NATURE]
+    other = [p for p in pool if P.key(p) not in P.NATURE]
+    if nature and (not other or rng.random() < NATURE_SHARE):
+        return rng.choice(nature)
+    return rng.choice(other)
 
 
 # ---------------------------------------------------------------- YouTube とサイト
@@ -401,6 +411,13 @@ def video_title(number, place=None):
     return title, style
 
 
+# 姉妹チャンネル(説明欄の終わりで紹介する。上級者向け機能でリンクがクリックできる)。閉じる予定の Too Close to Tell は入れない
+SISTERS = [
+    ("🗺️ Wait, That Big? — the true size of countries on the map", "https://www.youtube.com/@wait-that-big"),
+    ("🎨 Painted When? — guess the year a famous painting was made", "https://www.youtube.com/@painted-when"),
+]
+
+
 def youtube_meta(place, labels, correct, number):
     answer = labels[correct]
     lines = [
@@ -417,6 +434,9 @@ def youtube_meta(place, labels, correct, number):
         "",
         f"Play more on the website: {SITE}/",
         "",
+        "More quizzes from the same creator:",
+        *[f"{t}: {u}" for t, u in SISTERS],
+        "",
         "Satellite image: " + tiles.ATTRIBUTION,
         "License: https://creativecommons.org/licenses/by/4.0/",
         "",
@@ -424,12 +444,16 @@ def youtube_meta(place, labels, correct, number):
     ]
     tags = ["geography quiz", "satellite", "satellite images", "guess the place", "earth from space", "travel",
             "world heritage", "quiz", "geography", place["name"], place["country"]]
+    desc = _yt("\n".join(lines))[:4900]
+    style = video_title(number, place)[1]
     return {
         # 番号を先頭に(スマホの YouTube Studio の一覧でタイトルが切れても番号が見えるように)。
         # 「#15」だとハッシュタグ扱いされることがあるので「[15]」にする
         "title": _yt(f"[{number}] {video_title(number, place)[0]}")[:100],
-        "title_style": video_title(number, place)[1],
-        "description": _yt("\n".join(lines))[:4900],
+        "title_style": style,
+        "description": desc,
+        # 題名と説明の翻訳(日本語・スペイン語・フランス語・ドイツ語・ポルトガル語)
+        "localizations": locales.build(style, number, place.get("start"), desc),
         "tags": tags,
         "answer": answer,
     }
