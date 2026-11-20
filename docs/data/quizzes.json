@@ -268,5 +268,23 @@
   ],
   "answer": 1,
   "image": "img/15-the-world-islands.jpg"
+ },
+ {
+  "number": 16,
+  "slug": "16-valletta",
+  "video_id": "eXQABCGbTLw",
+  "uploaded_at": "2026-11-20T03:52:06+00:00",
+  "name": "Valletta",
+  "country": "Malta",
+  "note": "The capital of Malta and a UNESCO World Heritage Site",
+  "lon": 14.514,
+  "lat": 35.899,
+  "choices": [
+   "Rhodes",
+   "Valletta",
+   "Dubrovnik"
+  ],
+  "answer": 1,
+  "image": "img/16-valletta.jpg"
  }
 ]
