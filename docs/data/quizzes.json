@@ -286,5 +286,23 @@
   ],
   "answer": 1,
   "image": "img/16-valletta.jpg"
+ },
+ {
+  "number": 17,
+  "slug": "17-paris",
+  "video_id": "D9sqjMrVugg",
+  "uploaded_at": "2026-11-20T10:51:56+00:00",
+  "name": "Paris",
+  "country": "France",
+  "note": "The banks of the Seine are a UNESCO World Heritage Site",
+  "lon": 2.347,
+  "lat": 48.854,
+  "choices": [
+   "Berlin",
+   "Paris",
+   "London"
+  ],
+  "answer": 1,
+  "image": "img/17-paris.jpg"
  }
 ]
