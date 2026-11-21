@@ -52,6 +52,9 @@ TIMER_Y = 1352
 CREDIT_Y = 1440
 
 
+TAIL = 0.4          # 最後の読み上げのあとの間(秒)。以前は 1.0(2026-11-21 に短くした)
+LOOP_SEC = 1.1      # 最後のこの秒数で、冒頭の寄りの場面に戻る
+
 # ---------------------------------------------------------------- 文字と部品
 
 
@@ -218,8 +221,9 @@ def build(place, labels, correct, tts, out, stem="quiz", number=1):
     at["ans"] = reveal + 0.15
     at["info"] = at["ans"] + dur["ans"] + 0.3
     at["outro"] = at["info"] + dur["info"] + 0.6
-    end = at["outro"] + dur["outro"] + 1.0
+    end = at["outro"] + dur["outro"] + TAIL
     zoom = (0.3, reveal - 0.3)              # 答えまでの間に、寄りから引いていく
+    loop = (end - LOOP_SEC, end)            # 最後に冒頭と同じ寄りの場面へ戻る(くり返し再生のつながりを自然に)
     back = (reveal + 0.4, reveal + 2.6)     # 答えのあと、場所に向かってもう一度寄る
     back_km = start_km * 1.6
 
@@ -267,11 +271,15 @@ def build(place, labels, correct, tts, out, stem="quiz", number=1):
         b = ease((t - back[0]) / (back[1] - back[0]))
         if b > 0:
             km = math.exp(math.log(end_km) + (math.log(back_km) - math.log(end_km)) * b)
+        lp = ease((t - loop[0]) / (loop[1] - loop[0]))
+        if lp > 0:
+            km = math.exp(math.log(km) + (math.log(start_km) - math.log(km)) * lp)
         img = earth.render(km).convert("RGBA")
         img.alpha_composite(sh)
-        r = ease((t - reveal) / 0.3)
-        if r > 0:      # 答えの印:中心に輪を広げる
-            d = ImageDraw.Draw(img)
+        r = ease((t - reveal) / 0.3) * (1 - lp)
+        if r > 0:      # 答えの印:中心に輪を広げる(別の層に描いて重ねる。直接描くと薄い輪が濃く出る)
+            ring = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+            d = ImageDraw.Draw(ring)
             pulse = (t - reveal) % 1.2 / 1.2
             for k, rad in enumerate((48, 48 + 70 * pulse)):
                 alpha = int(255 * r * (1 if k == 0 else 1 - pulse))
@@ -279,8 +287,9 @@ def build(place, labels, correct, tts, out, stem="quiz", number=1):
                 # 明るい地面(砂漠・雪)でも見えるよう、暗い縁取りの上に金色の輪
                 d.ellipse([box[0] - 3, box[1] - 3, box[2] + 3, box[3] + 3], outline=(10, 14, 24, alpha * 2 // 3), width=12)
                 d.ellipse(box, outline=GOLD + (alpha,), width=6)
+            img.alpha_composite(ring)
         img.alpha_composite(kicker, (0, 130))
-        oa = ease((t - at["outro"]) / 0.4)
+        oa = ease((t - at["outro"]) / 0.4) * (1 - lp)
         if oa < 1:
             img.alpha_composite(with_alpha(qmain, 1 - oa), (0, 178))
         if oa > 0:
@@ -299,8 +308,10 @@ def build(place, labels, correct, tts, out, stem="quiz", number=1):
             img.alpha_composite(with_alpha(q, 1 - 0.7 * r), (int(CHOICE_CX - q.width / 2), CHOICE_YS[k] - q.height // 2))
         # 残り時間のバー
         ta = 1 - ease((t - reveal) / 0.3)
+        left = 1 - min(1.0, max(0.0, t / reveal))
+        if lp > 0:                  # 最後は、冒頭と同じく満タンのバーに戻す
+            ta, left = lp, 1.0
         if ta > 0:
-            left = 1 - min(1.0, max(0.0, t / reveal))
             d = ImageDraw.Draw(img)
             bx0 = CHOICE_CX - CHOICE_W // 2
             d.rounded_rectangle([bx0, TIMER_Y, bx0 + CHOICE_W, TIMER_Y + 8], radius=4, fill=(255, 255, 255, int(60 * ta)))
@@ -309,7 +320,7 @@ def build(place, labels, correct, tts, out, stem="quiz", number=1):
                 d.rounded_rectangle([bx0, TIMER_Y, bx0 + max(8, int(CHOICE_W * left)), TIMER_Y + 8], radius=4,
                                     fill=col + (int(255 * ta),))
         # 答え合わせ:場所の名前・国・ひとこと
-        ia = ease((t - at["ans"]) / 0.5)
+        ia = ease((t - at["ans"]) / 0.5) * (1 - lp)
         if ia > 0:
             img.alpha_composite(with_alpha(title, ia), (0, 300))
             img.alpha_composite(with_alpha(sub, ia), (0, 385))
@@ -510,6 +521,7 @@ def main():
             "date": datetime.now(TZ).date().isoformat(),
             "video": video,
             "site_image": "site.jpg",
+            "ending": "loop",          # 最後に冒頭の場面へ戻る終わり方(2026-11-21〜。stats.md で比べる)
             "seconds": round(seconds, 2),
             "site": site_fields(place, labels, correct),
             **youtube_meta(place, labels, correct, number),

@@ -179,3 +179,19 @@ GitHub の `schedule` は数時間遅れるので使わない。cron-job.org か
 
 上級者向け機能で説明欄のリンクがクリックできるようになったので、説明欄の終わりに姉妹チャンネル
 (Wait, That Big?・Painted When?)へのリンクを入れる(`make_video.SISTERS`。閉じる予定の Too Close to Tell は入れない)。
+
+## YouTube Analytics の数字(2026-11-21〜、`stats.py`)
+
+`stats.md` に、動画ごとの平均視聴割合・登録者の増加と、日別の流入元(ショート フィードからの再生の割合)も出すようにした
+(YouTube Analytics API。数字は2〜3日遅れ)。使うには、次の作業が1回だけ要る。それまでは、この部分だけ飛ばして今までどおり動く。
+
+1. Google Cloud Console(このチャンネルのプロジェクト)で、「API とサービス」→「ライブラリ」→ **YouTube Analytics API** を有効にする
+2. OAuth 同意画面の「データアクセス」に、スコープ `https://www.googleapis.com/auth/yt-analytics.readonly` を追加する
+3. ローカル PC で `python3 get_youtube_refresh_token.py client_secret_xxx.json` を実行し直す(スコープに yt-analytics.readonly が加わった)
+4. 表示された `YT_REFRESH_TOKEN` で、GitHub の Secrets を更新する(ほかの値は変わらない)
+
+## 最後の終わり方(2026-11-21〜)
+
+Shorts は最後まで見られると頭からくり返される。くり返し再生につなげやすいよう、最後の読み上げのあとの間を短くした
+(Painted When?・Guess From Space は、最後に冒頭と同じ拡大した場面へ戻る)。どちらの終わり方かは
+`upload_history.json` の `ending` に残り、`stats.md` で比べられる。
