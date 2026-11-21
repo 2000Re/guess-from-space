@@ -199,7 +199,7 @@ def script(place, labels, number=1):
         "c0": f"Is it {labels[0]}?", "c1": f"{labels[1]}?", "c2": f"Or {labels[2]}?",
         "lock": vary(number, "lock"),
         "ans": f"It's {P.spoken_name(place)}, {P.where(place)}!",
-        "info": place["note"].rstrip(".") + ".",
+        # ひとこと(note)は読み上げず、画面に出すだけ(2026-11-21〜。答えのあとに離れる人が多かったので短くした)
         "outro": vary(number, "outro"),
     }
 
@@ -213,18 +213,18 @@ def build(place, labels, correct, tts, out, stem="quiz", number=1):
     clips = {k: tts(t) for k, t in lines.items()}
     dur = {k: len(v) / N.SR for k, v in clips.items()}
     at = {"q": 0.08}
-    at["c0"] = at["q"] + dur["q"] + 0.35
-    at["c1"] = at["c0"] + dur["c0"] + 0.25
-    at["c2"] = at["c1"] + dur["c1"] + 0.25
-    at["lock"] = at["c2"] + dur["c2"] + 0.35
-    reveal = at["lock"] + dur["lock"] + 2.0
+    # 間は短めに(2026-11-21 に詰めた。平均視聴割合が Wait, That Big? の 90% 台に対して 70% 台だったため)
+    at["c0"] = at["q"] + dur["q"] + 0.2
+    at["c1"] = at["c0"] + dur["c0"] + 0.15
+    at["c2"] = at["c1"] + dur["c1"] + 0.15
+    at["lock"] = at["c2"] + dur["c2"] + 0.2
+    reveal = at["lock"] + dur["lock"] + 1.5
     at["ans"] = reveal + 0.15
-    at["info"] = at["ans"] + dur["ans"] + 0.3
-    at["outro"] = at["info"] + dur["info"] + 0.6
+    at["outro"] = at["ans"] + dur["ans"] + 0.35
     end = at["outro"] + dur["outro"] + TAIL
     zoom = (0.3, reveal - 0.3)              # 答えまでの間に、寄りから引いていく
     loop = (end - LOOP_SEC, end)            # 最後に冒頭と同じ寄りの場面へ戻る(くり返し再生のつながりを自然に)
-    back = (reveal + 0.4, reveal + 2.6)     # 答えのあと、場所に向かってもう一度寄る
+    back = (reveal + 0.4, min(reveal + 2.6, loop[0]))   # 答えのあと、場所に向かってもう一度寄る(最後の区間の前まで)
     back_km = start_km * 1.6
 
     # 音
@@ -358,6 +358,7 @@ def load_history(path):
 
 
 NATURE_SHARE = 0.3
+GREY_CITY_SHARE = 0.1
 
 
 def choose_place(history, rng):
@@ -374,13 +375,18 @@ def choose_place(history, rng):
         order = {k: i for i, k in enumerate(used)}      # 後の回で上書きされる = 最後に出した位置
         fresh = sorted(P.PLACES, key=lambda p: order.get(P.key(p), -1))[: max(1, len(P.PLACES) // 4)]
     pool = [p for p in fresh if p["country"] != last_country] or fresh
-    # 街・海岸・島の形(リスボン・ケープコッドなど)の方が、山・湖・火山などの内陸の自然より見られていた
-    # (2026-11-21 の stats.md)ので、自然は NATURE_SHARE の割合だけにする
-    nature = [p for p in pool if P.key(p) in P.NATURE]
-    other = [p for p in pool if P.key(p) not in P.NATURE]
-    if nature and (not other or rng.random() < NATURE_SHARE):
-        return rng.choice(nature)
-    return rng.choice(other)
+    # 街・海岸・島の形(リスボン・ケープコッドなど)の方が、山・湖・火山などの内陸の自然や、灰色の街並みばかりの
+    # 街より見られていた(2026-11-21 の stats.md)ので、自然は NATURE_SHARE、灰色の街は GREY_CITY_SHARE の割合だけにする
+    groups = [([p for p in pool if P.key(p) in P.NATURE], NATURE_SHARE),
+              ([p for p in pool if P.key(p) in P.GREY_CITY], GREY_CITY_SHARE),
+              ([p for p in pool if P.key(p) not in P.NATURE | P.GREY_CITY], 1 - NATURE_SHARE - GREY_CITY_SHARE)]
+    groups = [(g, w) for g, w in groups if g]
+    r, acc = rng.random() * sum(w for _, w in groups), 0.0
+    for g, w in groups:
+        acc += w
+        if r < acc:
+            return rng.choice(g)
+    return rng.choice(groups[-1][0])
 
 
 # ---------------------------------------------------------------- YouTube とサイト
@@ -522,7 +528,7 @@ def main():
             "date": datetime.now(TZ).date().isoformat(),
             "video": video,
             "site_image": "site.jpg",
-            "ending": "loop",          # 最後に冒頭の場面へ戻る終わり方(2026-11-21〜。stats.md で比べる)
+            "ending": "loop_short",    # 最後に冒頭の場面へ戻り、ひとことを読み上げない短い版(2026-11-21〜。stats.md で比べる)
             "seconds": round(seconds, 2),
             "site": site_fields(place, labels, correct),
             **youtube_meta(place, labels, correct, number),

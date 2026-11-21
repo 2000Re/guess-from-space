@@ -295,6 +295,14 @@ NATURE = {
 }
 
 
+# 寄りの写真が灰色の街並みばかりで、海岸線などの形が見えにくい街。パリ(295)・ストックホルム(394)などが、
+# 海岸や川の形がはっきりした回(リスボン 1,225・ケープコッド 1,194)より見られていなかったので、出す割合を減らす
+# (make_video.GREY_CITY_SHARE)
+GREY_CITY = {
+    "moscow", "budapest", "seoul", "tokyo", "bangkok", "cairo", "washington-d-c", "las-vegas", "shanghai", "mumbai",
+}
+
+
 def key(p):
     """投稿記録に使う、場所ごとの決まった名前。"""
     import re
