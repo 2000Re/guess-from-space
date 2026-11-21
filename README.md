@@ -178,7 +178,7 @@ GitHub の `schedule` は数時間遅れるので使わない。cron-job.org か
 ## 説明欄のリンク(2026-11-21〜)
 
 上級者向け機能で説明欄のリンクがクリックできるようになったので、説明欄の終わりに姉妹チャンネル
-(Wait, That Big?・Painted When?)へのリンクを入れる(`make_video.SISTERS`。閉じる予定の Too Close to Tell は入れない)。
+(Wait, That Big?・Painted When?・Too Close to Tell)へのリンクを入れる(`make_video.SISTERS`。2026-11-21 から Too Close to Tell も入れた)。
 
 ## YouTube Analytics の数字(2026-11-21〜、`stats.py`)
 

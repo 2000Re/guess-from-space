@@ -422,10 +422,11 @@ def video_title(number, place=None):
     return title, style
 
 
-# 姉妹チャンネル(説明欄の終わりで紹介する。上級者向け機能でリンクがクリックできる)。閉じる予定の Too Close to Tell は入れない
+# 姉妹チャンネル(説明欄の終わりで紹介する。上級者向け機能でリンクがクリックできる)
 SISTERS = [
     ("🗺️ Wait, That Big? — the true size of countries on the map", "https://www.youtube.com/@wait-that-big"),
     ("🎨 Painted When? — guess the year a famous painting was made", "https://www.youtube.com/@painted-when"),
+    ("🔍 Too Close to Tell — guess the museum object from an extreme close-up", "https://www.youtube.com/@too-close-to-tell"),
 ]
 
 
