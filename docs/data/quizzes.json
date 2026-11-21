@@ -322,5 +322,23 @@
   ],
   "answer": 0,
   "image": "img/18-cancun.jpg"
+ },
+ {
+  "number": 19,
+  "slug": "19-stromboli",
+  "video_id": "z3ft32j0J0g",
+  "uploaded_at": "2026-11-21T10:50:22+00:00",
+  "name": "Stromboli",
+  "country": "Italy",
+  "note": "One of the Aeolian Islands, a UNESCO World Heritage Site",
+  "lon": 15.213,
+  "lat": 38.789,
+  "choices": [
+   "Vulcano",
+   "Santorini",
+   "Stromboli"
+  ],
+  "answer": 2,
+  "image": "img/19-stromboli.jpg"
  }
 ]
