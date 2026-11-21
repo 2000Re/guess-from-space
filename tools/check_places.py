@@ -37,7 +37,7 @@ def main():
     args = ap.parse_args()
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
-    ps = P.PLACES
+    ps = P.ALL_PLACES if args.only else P.PLACES
     if args.only:
         keys = args.only.split(",")
         ps = [p for p in ps if P.key(p) in keys]

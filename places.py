@@ -304,7 +304,9 @@ GREY_CITY = {
 
 
 def key(p):
-    """投稿記録に使う、場所ごとの決まった名前。"""
+    """投稿記録に使う、場所ごとの決まった名前(ゲームの回は "game-" で始まる)。"""
+    if p.get("id"):
+        return p["id"]
     import re
     import unicodedata
     s = unicodedata.normalize("NFKD", p["name"]).encode("ascii", "ignore").decode().lower()
@@ -318,3 +320,85 @@ def spoken_name(p):
 
 def where(p):
     return p.get("where") or f"in {p['country']}"
+
+
+# ---------------------------------------------------------------- ゲームの舞台の回(2026-11-21〜)
+# 有名なゲームの舞台、またはモデルになった実在の場所。make_video.GAME_EVERY 本に1本、ここから出す。
+# ゲームの画面・ロゴ・キャラクターは使わず、ゲーム名を文字で書くだけ。「High Resolution」とは書かない(約10m/画素)。
+# game_note は画面に出す短い文、game_desc は説明欄に書く文。どちらも、ゲームの公式の舞台設定として広く知られた事実だけ。
+# GTA のように架空の街のときは「舞台」ではなく「モデルになった街」と書く。
+# base を書いたものは、ふつうの回の同じ場所(中心・寄りの幅・外れの選択肢)を使う。
+_GAMES = [
+    dict(base="washington-d-c", game="Fallout 3 and The Division 2",
+         game_note="The setting of Fallout 3 (2008) and The Division 2 (2019)",
+         game_desc="Fallout 3 (2008) is set in the ruins of Washington, D.C., and The Division 2 (2019) "
+                   "takes place in Washington, D.C."),
+    dict(base="manhattan", game="Marvel's Spider-Man",
+         game_note="The setting of Marvel's Spider-Man (2018)",
+         game_desc="Marvel's Spider-Man (2018) is set in Manhattan, New York City."),
+    dict(base="san-francisco", game="Watch Dogs 2",
+         game_note="The setting of Watch Dogs 2 (2016)",
+         game_desc="Watch Dogs 2 (2016) is set in the San Francisco Bay Area."),
+    dict(base="london", game="Assassin's Creed Syndicate",
+         game_note="The setting of Assassin's Creed Syndicate (2015)",
+         game_desc="Assassin's Creed Syndicate (2015) is set in Victorian London."),
+    dict(base="paris", game="Assassin's Creed Unity",
+         game_note="The setting of Assassin's Creed Unity (2014)",
+         game_desc="Assassin's Creed Unity (2014) is set in Paris during the French Revolution."),
+    dict(base="istanbul", game="Assassin's Creed Revelations",
+         game_note="Assassin's Creed Revelations (2011) is set here, as Constantinople",
+         game_desc="Assassin's Creed Revelations (2011) is set in Constantinople, today's Istanbul."),
+    dict(base="hong-kong", game="Sleeping Dogs",
+         game_note="The setting of Sleeping Dogs (2012)",
+         game_desc="Sleeping Dogs (2012) is set in Hong Kong."),
+    dict(name="Los Angeles", country="United States", lon=-118.4695, lat=33.9850, start=5,
+         wrong=["San Diego", "Sydney"], where="in California", game="Grand Theft Auto V",
+         game_note="The model for Los Santos in Grand Theft Auto V (2013)",
+         game_desc="Los Santos, the city of Grand Theft Auto V (2013), is based on Los Angeles. "
+                   "This view is centred on Venice Beach."),
+    dict(name="Miami", country="United States", lon=-80.1937, lat=25.7743, start=6,
+         wrong=["Tampa", "Havana"], where="in Florida", game="Grand Theft Auto: Vice City",
+         game_note="The model for Vice City in Grand Theft Auto: Vice City (2002)",
+         game_desc="Vice City, the city of Grand Theft Auto: Vice City (2002), is based on Miami."),
+    dict(name="Boston", country="United States", lon=-71.0656, lat=42.3550, start=5,
+         wrong=["Baltimore", "Halifax"], where="in Massachusetts", game="Fallout 4",
+         game_note="The setting of Fallout 4 (2015)",
+         game_desc="Fallout 4 (2015) is set in and around a post-apocalyptic Boston."),
+    dict(name="Chicago", country="United States", lon=-87.6278, lat=41.8820, start=5,
+         wrong=["Toronto", "Cleveland"], where="in Illinois", game="Watch Dogs",
+         game_note="The setting of Watch Dogs (2014)",
+         game_desc="Watch Dogs (2014) is set in Chicago."),
+    dict(name="Seattle", country="United States", lon=-122.3321, lat=47.6062, start=6,
+         wrong=["Vancouver", "Portland"], where="in Washington State", game="The Last of Us Part II",
+         game_note="Much of The Last of Us Part II (2020) takes place here",
+         game_desc="Much of The Last of Us Part II (2020) takes place in Seattle."),
+    dict(name="Florence", country="Italy", lon=11.2560, lat=43.7731, start=3,
+         wrong=["Siena", "Bologna"], game="Assassin's Creed II",
+         game_note="A main setting of Assassin's Creed II (2009)",
+         game_desc="Florence is one of the main cities of Assassin's Creed II (2009)."),
+    dict(name="Rome", country="Italy", lon=12.4769, lat=41.8986, start=4,
+         wrong=["Milan", "Naples"], game="Assassin's Creed Brotherhood",
+         game_note="The setting of Assassin's Creed Brotherhood (2010)",
+         game_desc="Assassin's Creed Brotherhood (2010) is set mainly in Rome."),
+    dict(name="Giza", country="Egypt", lon=31.1325, lat=29.9773, start=2, end=40,
+         wrong=["Luxor", "Saqqara"], game="Assassin's Creed Origins",
+         game_note="Its pyramids appear in Assassin's Creed Origins (2017)",
+         game_desc="Assassin's Creed Origins (2017) is set in ancient Egypt, and the pyramids of Giza appear in the game."),
+]
+
+
+def _game_places():
+    by_key = {key(p): p for p in PLACES}
+    out = []
+    for g in _GAMES:
+        p = dict(by_key[g["base"]]) if "base" in g else {}
+        p.pop("unesco", None)
+        p.update({k: v for k, v in g.items() if k != "base"})
+        p["note"] = p["game_note"]
+        p["id"] = "game-" + key(p)
+        out.append(p)
+    return out
+
+
+GAME_PLACES = _game_places()
+ALL_PLACES = PLACES + GAME_PLACES

@@ -94,7 +94,39 @@ TITLES = {
     },
 }
 
+# ゲームの舞台の回(make_video.GAME_TITLES)
+TITLES.update({
+    "game_real": {
+        "ja": "このゲームの場所は実在する。どこかわかる？🎮",
+        "es": "Este lugar de videojuego es real. ¿Dónde está? 🎮",
+        "fr": "Ce lieu de jeu vidéo existe vraiment. Où est-ce ? 🎮",
+        "de": "Dieser Videospielort ist echt. Wo auf der Erde ist er? 🎮",
+        "pt": "Este lugar de videogame é real. Onde fica? 🎮",
+    },
+    "game_gamers": {
+        "ja": "ゲーマーへ：このゲームの舞台、宇宙から見つけられる？🎮",
+        "es": "Gamers: ¿reconocen este escenario de videojuego desde el espacio? 🎮",
+        "fr": "Gamers : reconnaissez-vous ce décor de jeu vu de l'espace ? 🎮",
+        "de": "Gamer: Erkennt ihr diesen Spielschauplatz aus dem All? 🎮",
+        "pt": "Gamers: reconhecem este cenário de jogo visto do espaço? 🎮",
+    },
+    "game_world": {
+        "ja": "有名なゲームの世界を宇宙から。ここはどこ？🛰️",
+        "es": "Un mundo de videojuego famoso, visto desde el espacio. ¿Dónde es? 🛰️",
+        "fr": "Un célèbre monde de jeu vidéo vu de l'espace. Où est-ce ? 🛰️",
+        "de": "Eine berühmte Spielwelt aus dem All. Wo ist das? 🛰️",
+        "pt": "Um mundo de videogame famoso visto do espaço. Onde é? 🛰️",
+    },
+})
+
 # 説明の1行目(その言語)。そのあとに英語の説明をそのまま続ける
+GAME_LEAD = {
+    "ja": "有名なゲームに出てくる実在の場所を、宇宙から見るクイズです。答えが出る前に予想してみてね！🎮",
+    "es": "Un lugar real de un videojuego famoso, visto desde el espacio. ¡Adivina antes de la respuesta! 🎮",
+    "fr": "Un vrai lieu d'un jeu vidéo célèbre, vu de l'espace. Devine avant la réponse ! 🎮",
+    "de": "Ein echter Ort aus einem berühmten Videospiel, aus dem All gesehen. Rate vor der Auflösung! 🎮",
+    "pt": "Um lugar real de um videogame famoso, visto do espaço. Adivinhe antes da resposta! 🎮",
+}
 LEAD = {
     "ja": "答えが出る前に予想してみてね！🛰️ 衛星写真から有名な場所を当てるクイズです。",
     "es": "¡Adivina antes de la respuesta! 🛰️ Un quiz para reconocer lugares famosos en fotos de satélite.",
@@ -110,7 +142,7 @@ def km_text(km, lang):
     return s if lang == "ja" else s.replace(".", ",")
 
 
-def build(style, number, km, description_en):
+def build(style, number, km, description_en, game=False):
     """{言語: {"title", "description"}}。訳のない型なら空(YouTube には英語だけが出る)。"""
     if style not in TITLES:
         return {}
@@ -122,6 +154,6 @@ def build(style, number, km, description_en):
                 continue
             tpl = tpl.format(km=km_text(km, lang))
         title = f"[{number}] {tpl}".replace("<", "‹").replace(">", "›")[:100]
-        desc = (LEAD[lang] + "\n\n" + description_en).replace("<", "‹").replace(">", "›")[:4900]
+        desc = ((GAME_LEAD if game else LEAD)[lang] + "\n\n" + description_en).replace("<", "‹").replace(">", "›")[:4900]
         out[lang] = {"title": title, "description": desc}
     return out

@@ -182,25 +182,35 @@ LINES = {
     "outro": ["How did you do? Tell me in the comments.", "Did you recognize it?", "Have you been there? Tell me below!",
               "Were you right? Comment your answer!", "Which place should we fly over next?"],
 }
+# ゲームの舞台の回(places.GAME_PLACES)の言い回し
+GAME_LINES = {
+    "q": ["A famous video game is based on this place. Where is it?",
+          "Gamers, you may know this place. Where on Earth is it?",
+          "This real place inspired a famous video game. Can you name it?"],
+    "outro": ["Have you played it? Tell me in the comments!", "Which game should we visit next? Comment below!",
+              "Did you know this place from the game?"],
+}
+GAME_KICKER = "GAME WORLD · REAL PLACE"
 LEADS = ["Can you guess the place from space? Comment your answer before the reveal! 🌍",
          "Name this place before the camera zooms out! 🛰️",
          "Pause and guess first: where on Earth is this? 🌍",
          "How well do you know the world from above? Guess the place! 🛰️"]
 
 
-def vary(number, key):
-    opts = LINES[key]
+def vary(number, key, game=False):
+    opts = GAME_LINES[key] if game and key in GAME_LINES else LINES[key]
     return opts[(number + sum(map(ord, key))) % len(opts)]
 
 
 def script(place, labels, number=1):
+    game = bool(place.get("game"))
     return {
-        "q": vary(number, "q"),
+        "q": vary(number, "q", game),
         "c0": f"Is it {labels[0]}?", "c1": f"{labels[1]}?", "c2": f"Or {labels[2]}?",
         "lock": vary(number, "lock"),
         "ans": f"It's {P.spoken_name(place)}, {P.where(place)}!",
         # ひとこと(note)は読み上げず、画面に出すだけ(2026-11-21〜。答えのあとに離れる人が多かったので短くした)
-        "outro": vary(number, "outro"),
+        "outro": vary(number, "outro", game),
     }
 
 
@@ -254,7 +264,7 @@ def build(place, labels, correct, tts, out, stem="quiz", number=1):
     earth = Earth(place["lon"], place["lat"])
     earth.prefetch(start_km, end_km)
     sh = shade()
-    kicker = text_layer(["GUESS FROM SPACE"], font(SANS_BOLD, 30), GOLD)
+    kicker = text_layer([GAME_KICKER if place.get("game") else "GUESS FROM SPACE"], font(SANS_BOLD, 30), GOLD)
     qmain = text_layer([QUESTION], font(SANS_BOLD, 64), WHITE)
     qout = text_layer(["How did you do?"], font(SANS_BOLD, 64), WHITE)
     pills = [pill(lb, CHOICE_W, (16, 18, 22, 220), WHITE, (255, 255, 255, 130)) for lb in labels]
@@ -358,6 +368,20 @@ def load_history(path):
 
 
 NATURE_SHARE = 0.3
+GAME_EVERY = 7          # この本数に1本、ゲームの舞台の回(番号が GAME_EVERY の倍数の回)
+
+
+def choose_game(history, rng):
+    """まだ出していないゲームの舞台から選ぶ。ふつうの回で最近出した場所・直前と同じ国は後回し。全部出したら None。"""
+    used = {h["key"] for h in history}
+    fresh = [p for p in P.GAME_PLACES if P.key(p) not in used]
+    if not fresh:
+        return None
+    recent = {h["key"] for h in history[-20:]}
+    last = history[-1]["key"] if history else None
+    last_country = next((p["country"] for p in P.ALL_PLACES if P.key(p) == last), None)
+    best = [p for p in fresh if P.key(p)[len("game-"):] not in recent and p["country"] != last_country]
+    return rng.choice(best or fresh)
 GREY_CITY_SHARE = 0.1
 
 
@@ -366,7 +390,7 @@ def choose_place(history, rng):
     used = [h["key"] for h in history]
     last_country = None
     if history:
-        last = next((p for p in P.PLACES if P.key(p) == history[-1]["key"]), None)
+        last = next((p for p in P.ALL_PLACES if P.key(p) == history[-1]["key"]), None)
         last_country = last and last["country"]
     fresh = [p for p in P.PLACES if P.key(p) not in used]
     if not fresh:
@@ -415,9 +439,20 @@ TITLES = [
 ]
 
 
+# ゲームの舞台の回の題名(ゲームの回の中で順に回す)。ゲーム名は題名に書かない(答えの手がかりになるので)
+GAME_TITLES = [
+    ("game_real", "This video game place is real. Where on Earth is it? 🎮"),
+    ("game_gamers", "Gamers: can you find this game setting from space? 🎮"),
+    ("game_world", "A famous game world, seen from space. Where is it? 🛰️"),
+]
+
+
 def video_title(number, place=None):
     """(題名, 型)。答えは書かない。番号順に回すので、毎回ちがう題名になる(12本で一周)。
     {km} は冒頭の写真の幅(places.py の start)。答えの手がかりにはならない。"""
+    if place and place.get("game"):
+        style, title = GAME_TITLES[(number // GAME_EVERY) % len(GAME_TITLES)]
+        return title, style
     style, title = TITLES[(number - 1) % len(TITLES)]
     if "{km}" in title:
         if not place or not place.get("start"):
@@ -438,15 +473,18 @@ SISTERS = [
 
 def youtube_meta(place, labels, correct, number):
     answer = labels[correct]
+    game = place.get("game")
+    lead = ("A real place from a famous video game, seen from space. Can you name it before the reveal? 🎮"
+            if game else LEADS[number % len(LEADS)])
     lines = [
-        LEADS[number % len(LEADS)],
+        lead,
         "",
         "Choices: " + " / ".join(labels),
         "",
         "⬇️ Answer below ⬇️",
         ".", ".", ".",
         f"Answer: {answer} ({place['country']})",
-        place["note"].rstrip(".") + ".",
+        (place["game_desc"] if game else place["note"].rstrip(".") + "."),
         f"Map: https://www.openstreetmap.org/?mlat={place['lat']:.4f}&mlon={place['lon']:.4f}#map=12/"
         f"{place['lat']:.4f}/{place['lon']:.4f}",
         "",
@@ -457,11 +495,16 @@ def youtube_meta(place, labels, correct, number):
         "",
         "Satellite image: " + tiles.ATTRIBUTION,
         "License: https://creativecommons.org/licenses/by/4.0/",
+        *(["This video uses only satellite images, with no game footage. "
+           "It is not affiliated with or endorsed by the game's makers."] if game else []),
         "",
-        "#geography #satellite #geographyquiz #shorts" + (" #unesco" if place.get("unesco") else ""),
+        "#geography #satellite #geographyquiz #shorts" + (" #unesco" if place.get("unesco") else "")
+        + (" #gaming #videogames" if game else ""),
     ]
     tags = ["geography quiz", "satellite", "satellite images", "guess the place", "earth from space", "travel",
             "world heritage", "quiz", "geography", place["name"], place["country"]]
+    if game:
+        tags += ["video game locations", "real life game locations", *game.split(" and ")]
     desc = _yt("\n".join(lines))[:4900]
     style = video_title(number, place)[1]
     return {
@@ -471,7 +514,7 @@ def youtube_meta(place, labels, correct, number):
         "title_style": style,
         "description": desc,
         # 題名と説明の翻訳(日本語・スペイン語・フランス語・ドイツ語・ポルトガル語)
-        "localizations": locales.build(style, number, place.get("start"), desc),
+        "localizations": locales.build(style, number, place.get("start"), desc, game=bool(game)),
         "tags": tags,
         "answer": answer,
     }
@@ -508,12 +551,12 @@ def main():
     number = max([h["number"] for h in history], default=0) + 1
     rng = random.Random(args.seed if args.seed is not None else number * 7919)
     if args.place:
-        found = [p for p in P.PLACES if P.key(p) == args.place]
+        found = [p for p in P.ALL_PLACES if P.key(p) == args.place]
         if not found:
-            raise SystemExit(f"場所が見つかりません: {args.place}(候補: {', '.join(P.key(p) for p in P.PLACES)})")
+            raise SystemExit(f"場所が見つかりません: {args.place}(候補: {', '.join(P.key(p) for p in P.ALL_PLACES)})")
         place = found[0]
     else:
-        place = choose_place(history, rng)
+        place = (number % GAME_EVERY == 0 and choose_game(history, rng)) or choose_place(history, rng)
     labels, correct = choices_for(place, rng)
     print(f"#{number} {place['name']} ({place['country']})  choices: {labels}")
 
@@ -530,6 +573,8 @@ def main():
             "site_image": "site.jpg",
             "ending": "loop_short",    # 最後に冒頭の場面へ戻り、ひとことを読み上げない短い版(2026-11-21〜。stats.md で比べる)
             "seconds": round(seconds, 2),
+            "format": "game" if place.get("game") else "place",   # stats.md で、ゲームの舞台の回とふつうの回を比べる
+            **({"game": place["game"]} if place.get("game") else {}),
             "site": site_fields(place, labels, correct),
             **youtube_meta(place, labels, correct, number),
         }
