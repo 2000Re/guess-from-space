@@ -304,5 +304,23 @@
   ],
   "answer": 1,
   "image": "img/17-paris.jpg"
+ },
+ {
+  "number": 18,
+  "slug": "18-cancun",
+  "video_id": "5xNrv9am_NU",
+  "uploaded_at": "2026-11-21T03:50:13+00:00",
+  "name": "Cancún",
+  "country": "Mexico",
+  "note": "Its hotel zone lies on a long, narrow strip of sand",
+  "lon": -86.77,
+  "lat": 21.1,
+  "choices": [
+   "Cancún",
+   "Miami Beach",
+   "Punta Cana"
+  ],
+  "answer": 0,
+  "image": "img/18-cancun.jpg"
  }
 ]
