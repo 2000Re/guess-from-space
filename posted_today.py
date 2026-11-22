@@ -14,7 +14,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 MAX_PER_DAY = 2
-MIN_GAP_HOURS = 4
+MIN_GAP_HOURS = 1.5     # 2026-11-22 に 4 から変更(投稿が 15:04・18:04 と3時間差になったため)
 TZ = ZoneInfo("Asia/Tokyo")
 HISTORY = Path(__file__).parent / "upload_history.json"
 
