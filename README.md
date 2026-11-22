@@ -138,7 +138,8 @@ GitHub の `schedule` は数時間遅れるので使わない。cron-job.org か
 - ヘッダー: `Authorization: Bearer <Fine-grained token(このリポジトリの Actions: Read and write だけ)>`、
   `Accept: application/vnd.github+json`
 - 本文: `{"ref":"main","inputs":{"scheduled":"true"}}`
-- 時刻: **12:47 と 19:47(JST)**(cron 式 `47 12,19 * * *`、タイムゾーン Asia/Tokyo)。
+- 時刻: **12:47 と 19:47(JST)**、取りこぼし用に 12:59・19:59(cron 式 `47,59 12,19 * * *`、タイムゾーン Asia/Tokyo。
+  2026-11-22 に予備を追加。先の回が成功していれば、予備の回は posted_today.py が止める)。
   2026-11-17 に 07:47 から 12:47 に変えた。19時台の回の平均 946回に対して、7時台は 502回だったため(`stats.md`)。
   起動が重なっても `posted_today.py` が1日2本・4時間の間隔を守る
 
