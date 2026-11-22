@@ -358,5 +358,23 @@
   ],
   "answer": 0,
   "image": "img/20-mount-pinatubo.jpg"
+ },
+ {
+  "number": 21,
+  "slug": "21-chicago",
+  "video_id": "byufVWM5ZGk",
+  "uploaded_at": "2026-11-22T10:50:05+00:00",
+  "name": "Chicago",
+  "country": "United States",
+  "note": "The setting of Watch Dogs (2014)",
+  "lon": -87.6278,
+  "lat": 41.882,
+  "choices": [
+   "Toronto",
+   "Chicago",
+   "Cleveland"
+  ],
+  "answer": 1,
+  "image": "img/21-chicago.jpg"
  }
 ]
