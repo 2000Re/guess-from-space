@@ -340,5 +340,23 @@
   ],
   "answer": 2,
   "image": "img/19-stromboli.jpg"
+ },
+ {
+  "number": 20,
+  "slug": "20-mount-pinatubo",
+  "video_id": "N1vZy2bjwmU",
+  "uploaded_at": "2026-11-22T03:50:21+00:00",
+  "name": "Mount Pinatubo",
+  "country": "Philippines",
+  "note": "Its crater lake formed after the 1991 eruption",
+  "lon": 120.35,
+  "lat": 15.143,
+  "choices": [
+   "Mount Pinatubo",
+   "Mount Bromo",
+   "Taal Volcano"
+  ],
+  "answer": 0,
+  "image": "img/20-mount-pinatubo.jpg"
  }
 ]
