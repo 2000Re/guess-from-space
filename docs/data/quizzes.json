@@ -376,5 +376,23 @@
   ],
   "answer": 1,
   "image": "img/21-chicago.jpg"
+ },
+ {
+  "number": 22,
+  "slug": "22-mount-etna",
+  "video_id": "CGqTOWsN3SU",
+  "uploaded_at": "2026-11-23T06:07:41+00:00",
+  "name": "Mount Etna",
+  "country": "Italy",
+  "note": "A UNESCO World Heritage Site",
+  "lon": 14.9934,
+  "lat": 37.751,
+  "choices": [
+   "Mount Etna",
+   "Mount Teide",
+   "Mount Vesuvius"
+  ],
+  "answer": 0,
+  "image": "img/22-mount-etna.jpg"
  }
 ]
