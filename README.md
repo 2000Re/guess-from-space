@@ -235,3 +235,21 @@ Shorts は最後まで見られると頭からくり返される。くり返し�
   `python get_youtube_refresh_token.py client_secret.json` を実行し、Secrets の `YT_REFRESH_TOKEN` を新しい値にする
 - これまでの動画は、Actions の「playlists」を手動で1回動かすとまとめて入る(入っている動画は入れ直さない)
 - `playlists.py` と `.github/workflows/playlists.yml` は4チャンネルで同じファイル(`sync_check.py` で確かめる)
+
+## 通常動画「Guess From Space Challenge」(2026-11-23〜、`longform.py`)
+
+横長(1920x1080)、12問・約3分40秒、週1本。右に衛星写真、左の帯に問題・3択・5秒のカウントダウン。
+考えている間に少しずつ引き、答えで一気に引いて、中心に輪の印と場所の名前・国・ひとことを出す。
+
+- 場所は places.py から選ぶ(自然4問、灰色の街並みの街とゲームの舞台は1問まで、同じ国は1問だけ)。
+  過去の通常動画で出した場所は出さない。直近30日の Shorts に出た場所は後回し(足りなければ使う)。
+  Shorts の場所選びには影響しない(通常動画と Shorts で同じ場所が出ることはある)
+- チャプターは「Place 1」などにして、答えは書かない。答えは説明欄の下の方にまとめる。
+  チャプターはどれも10秒以上(`check_chapters`。満たさなければ書き出す前に止める)
+- 出典(CC BY 4.0)は動画の右下に常に出し、説明欄にも書く。タイルは Shorts と同じ tile_cache を使い回す
+- サムネイル: `thumbnail.jpg`(a、投稿のときに設定)、`thumbnail_b.jpg`(Where on Earth is this?)、
+  `thumbnail_c.jpg`(Can you get 12/12?)。b・c は Actions の Artifacts からダウンロードして「テストと比較」に使う
+- 投稿は `.github/workflows/longform.yml`。毎週日曜 10:13 UTC(19:13 JST)ごろの定期実行は、リポジトリ変数
+  `LONGFORM_AUTO` が `true` のときだけ動く。手動実行の既定は限定公開(unlisted)
+- 投稿すると「Guess From Space Challenge: Full Quizzes」の再生リストに入り、Shorts の説明欄にもいちばん新しい回のリンクが出る
+- 試す: `python longform.py --tts dummy --rounds 3 --out out_long`

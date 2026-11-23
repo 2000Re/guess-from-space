@@ -1,5 +1,8 @@
 """Guess From Space の再生リストの決め方(playlists.py が使う)。1本が2つ以上に入ることもある。"""
-HISTORIES = ["upload_history.json"]
+HISTORIES = ["upload_history.json", "longform_history.json"]
+
+LONG = ("Guess From Space Challenge: Full Quizzes",
+        "12 famous places seen in satellite images in every episode. Keep score! New episode every week.")
 
 GAME = ("Real Video Game Places Seen From Space",
         "Real places that are the setting of, or the model for, famous video games, seen in satellite images.")
@@ -12,6 +15,8 @@ CITIES = ("Cities, Coasts and Islands From Space",
 
 
 def for_record(rec):
+    if "keys" in rec:                       # longform_history.json(通常動画)
+        return [LONG]
     import places as P
     key = rec.get("key", "")
     p = next((x for x in P.ALL_PLACES if P.key(x) == key), None)

@@ -471,6 +471,16 @@ SISTERS = [
 ]
 
 
+def latest_long():
+    """いちばん新しい通常動画(Guess From Space Challenge)の (番号, URL)。なければ None。"""
+    try:
+        hist = json.loads((HERE / "longform_history.json").read_text() or "[]")
+    except (OSError, ValueError):
+        return None
+    pub = [h for h in hist if h.get("video_id") and h.get("privacy") == "public"]
+    return (pub[-1]["number"], f"https://youtu.be/{pub[-1]['video_id']}") if pub else None
+
+
 def youtube_meta(place, labels, correct, number):
     answer = labels[correct]
     game = place.get("game")
@@ -489,6 +499,8 @@ def youtube_meta(place, labels, correct, number):
         f"{place['lat']:.4f}/{place['lon']:.4f}",
         "",
         f"Play more on the website: {SITE}/",
+        *([f"▶️ Try the full 12-place Guess From Space Challenge #{latest_long()[0]}: {latest_long()[1]}"]
+          if latest_long() else []),
         "",
         "More quizzes from the same creator:",
         *[f"{t}: {u}" for t, u in SISTERS],
