@@ -412,5 +412,23 @@
   ],
   "answer": 0,
   "image": "img/23-panama-canal.jpg"
+ },
+ {
+  "number": 24,
+  "slug": "24-lake-como",
+  "video_id": "hBgirIlkWf4",
+  "uploaded_at": "2026-11-23T22:11:01+00:00",
+  "name": "Lake Como",
+  "country": "Italy",
+  "note": "A Y-shaped lake at the foot of the Alps",
+  "lon": 9.257,
+  "lat": 45.987,
+  "choices": [
+   "Lake Geneva",
+   "Lake Garda",
+   "Lake Como"
+  ],
+  "answer": 2,
+  "image": "img/24-lake-como.jpg"
  }
 ]
