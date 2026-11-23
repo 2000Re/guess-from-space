@@ -394,5 +394,23 @@
   ],
   "answer": 0,
   "image": "img/22-mount-etna.jpg"
+ },
+ {
+  "number": 23,
+  "slug": "23-panama-canal",
+  "video_id": "2bR0OV9FuKA",
+  "uploaded_at": "2026-11-23T09:07:15+00:00",
+  "name": "Panama Canal",
+  "country": "Panama",
+  "note": "It connects the Atlantic and Pacific oceans",
+  "lon": -79.919,
+  "lat": 9.272,
+  "choices": [
+   "Panama Canal",
+   "Kiel Canal",
+   "Suez Canal"
+  ],
+  "answer": 0,
+  "image": "img/23-panama-canal.jpg"
  }
 ]
