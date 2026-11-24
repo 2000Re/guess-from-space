@@ -1,56 +1,59 @@
 # 再生数のまとめ
 
-`stats.py` が毎日作り直す(最終更新 2026-11-23 08:37 JST)。比べるのは投稿から約3日目の再生数(古い動画ほど多くなるのをそろえるため)。「最新の平均」は投稿からの日数がそろっていないので参考。
+`stats.py` が毎日作り直す(最終更新 2026-11-24 12:57 JST)。比べるのは投稿から約3日目の再生数(古い動画ほど多くなるのをそろえるため)。「最新の平均」は投稿からの日数がそろっていないので参考。
 
 ## 全体
 
 | 値 | 3日目の本数 | 平均 | 中央値 | 最新の本数 | 最新の平均(参考) | 平均視聴割合(%) |
 |---|---:|---:|---:|---:|---:|---:|
-| すべて | 15 | 680 | 722 | 21 | 600 | 89 |
+| すべて | 18 | 646 | 617 | 24 | 548 | 85 |
 
 ## title_style
 
 | 値 | 3日目の本数 | 平均 | 中央値 | 最新の本数 | 最新の平均(参考) | 平均視聴割合(%) |
 |---|---:|---:|---:|---:|---:|---:|
-| five_seconds | 1 | 977 | 977 | 1 | 977 | 77 |
-| map_lovers | 1 | 958 | 958 | 1 | 958 | 70 |
-| pros | 1 | 955 | 955 | 2 | 508 | 82 |
-| across | 1 | 860 | 860 | 1 | 861 | 76 |
-| famous | 1 | 805 | 805 | 2 | 700 | 67 |
-| above | 1 | 722 | 722 | 1 | 723 | 142 |
-| (なし) | 6 | 631 | 483 | 6 | 634 | 89 |
-| classic | 1 | 415 | 415 | 1 | 415 | 73 |
-| space | 1 | 396 | 396 | 1 | 396 | 75 |
-| photo | 1 | 326 | 326 | 1 | 326 | 107 |
-| width | 0 |  |  | 1 | 736 | 69 |
-| orbit | 0 |  |  | 1 | 461 | 73 |
-| zoom | 0 |  |  | 1 | 216 | 148 |
-| game_real | 0 |  |  | 1 | 301 |  |
+| five_seconds | 1 | 977 | 977 | 1 | 978 | 77 |
+| map_lovers | 1 | 958 | 958 | 2 | 564 | 70 |
+| pros | 1 | 955 | 955 | 2 | 538 | 56 |
+| across | 1 | 860 | 860 | 2 | 499 | 76 |
+| famous | 1 | 805 | 805 | 2 | 705 | 72 |
+| width | 1 | 737 | 737 | 1 | 737 | 69 |
+| above | 1 | 722 | 722 | 2 | 410 | 142 |
+| (なし) | 6 | 631 | 483 | 6 | 636 | 89 |
+| orbit | 1 | 467 | 467 | 1 | 467 | 72 |
+| classic | 1 | 415 | 415 | 1 | 417 | 73 |
+| space | 1 | 396 | 396 | 1 | 397 | 75 |
+| photo | 1 | 326 | 326 | 1 | 327 | 105 |
+| zoom | 1 | 216 | 216 | 1 | 216 | 148 |
+| game_real | 0 |  |  | 1 | 354 |  |
 
 ## ending
 
 | 値 | 3日目の本数 | 平均 | 中央値 | 最新の本数 | 最新の平均(参考) | 平均視聴割合(%) |
 |---|---:|---:|---:|---:|---:|---:|
-| (なし) | 15 | 680 | 722 | 17 | 671 | 85 |
-| loop_short | 0 |  |  | 4 | 298 | 148 |
+| (なし) | 17 | 671 | 722 | 17 | 672 | 85 |
+| loop_short | 1 | 216 | 216 | 7 | 245 | 85 |
 
 ## 投稿の時間帯
 
 | 値 | 3日目の本数 | 平均 | 中央値 | 最新の本数 | 最新の平均(参考) | 平均視聴割合(%) |
 |---|---:|---:|---:|---:|---:|---:|
-| 12時台 | 1 | 958 | 958 | 4 | 496 | 96 |
-| 19時台 | 6 | 898 | 918 | 9 | 750 | 81 |
-| 07時台 | 5 | 606 | 512 | 5 | 606 | 105 |
-| 20時台 | 1 | 415 | 415 | 1 | 415 | 73 |
-| 13時台 | 1 | 396 | 396 | 1 | 396 | 75 |
+| 19時台 | 7 | 836 | 860 | 9 | 759 | 80 |
+| 12時台 | 3 | 637 | 737 | 4 | 511 | 79 |
+| 07時台 | 5 | 606 | 512 | 6 | 534 | 105 |
+| 20時台 | 1 | 415 | 415 | 1 | 417 | 73 |
+| 13時台 | 1 | 396 | 396 | 1 | 397 | 75 |
 | 21時台 | 1 | 15 | 15 | 1 | 19 | 70 |
+| 15時台 | 0 |  |  | 1 | 97 |  |
+| 18時台 | 0 |  |  | 1 | 136 |  |
 
 ## 日別の再生と流入元(直近28日、YouTube Analytics。2〜3日遅れ)
 
 | 日付 | 再生(全体) | ショート フィード | 割合 |
 |---|---:|---:|---:|
+| 2026-11-21 | 799 | 759 | 95% |
 | 2026-11-20 | 1061 | 998 | 94% |
-| 2026-11-19 | 771 | 731 | 95% |
+| 2026-11-19 | 756 | 715 | 95% |
 | 2026-11-18 | 1409 | 1348 | 96% |
 | 2026-11-17 | 1334 | 1265 | 95% |
 | 2026-11-16 | 1853 | 1785 | 96% |
@@ -63,24 +66,27 @@
 
 | # | 答え | 投稿(JST) | 1日目 | 3日目 | 7日目 | 最新 | 高評価 | コメント | 平均視聴割合 | 登録者+ |
 |---:|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| [21](https://youtube.com/shorts/byufVWM5ZGk) | Chicago | 11-22 19:50 |  |  |  | 301 | 3 | 0 |  |  |
-| [20](https://youtube.com/shorts/N1vZy2bjwmU) | Mount Pinatubo | 11-22 12:50 |  |  |  | 73 | 1 | 0 |  |  |
-| [19](https://youtube.com/shorts/z3ft32j0J0g) | Stromboli | 11-21 19:50 | 602 |  |  | 602 | 1 | 0 |  |  |
-| [18](https://youtube.com/shorts/5xNrv9am_NU) | Cancún | 11-21 12:50 | 216 |  |  | 216 | 0 | 0 | 148% | 0 |
-| [17](https://youtube.com/shorts/D9sqjMrVugg) | Paris | 11-20 19:51 | 411 |  |  | 461 | 5 | 0 | 73% | 0 |
-| [16](https://youtube.com/shorts/eXQABCGbTLw) | Valletta | 11-20 12:52 | 750 |  |  | 736 | 4 | 1 | 69% | 0 |
-| [15](https://youtube.com/shorts/6NzH3-lVnQw) | The World Islands | 11-19 19:54 | 276 | 326 |  | 326 | 4 | 0 | 107% | 0 |
-| [14](https://youtube.com/shorts/G5s8hVq_DpY) | Stockholm | 11-19 13:04 | 394 | 396 |  | 396 | 1 | 0 | 75% | 0 |
-| [13](https://youtube.com/shorts/fiZTzsE0NlE) | Lake Taupo | 11-18 20:02 | 353 | 415 |  | 415 | 4 | 0 | 73% | 0 |
-| [12](https://youtube.com/shorts/CfbN3QS-ZpA) | London | 11-18 12:57 | 963 | 958 |  | 958 | 7 | 0 | 70% | 1 |
-| [11](https://youtube.com/shorts/gUwVLgNn0QE) | San Francisco | 11-17 19:50 | 760 | 860 |  | 861 | 8 | 0 | 76% | 1 |
-| [10](https://youtube.com/shorts/O8BFDoSR5Ak) | Copenhagen | 11-17 07:52 | 722 | 722 |  | 723 | 4 | 1 | 142% | 1 |
-| [9](https://youtube.com/shorts/L3yeKWYTnR4) | Miami Beach | 11-16 19:50 | 910 | 977 |  | 977 | 12 | 2 | 77% | 0 |
-| [8](https://youtube.com/shorts/wUQrcldNysI) | Vancouver | 11-16 07:50 | 813 | 955 | 943 | 943 | 9 | 0 | 82% | 0 |
-| [7](https://youtube.com/shorts/47QAQ1mAxsc) | Santorini | 11-15 19:49 | 753 | 805 | 799 | 799 | 4 | 0 | 67% | 0 |
-| [6](https://youtube.com/shorts/npkO3GPVzz4) | Palm Jumeirah | 11-15 07:51 | 506 | 512 | 516 | 516 | 3 | 0 | 72% | 1 |
-| [5](https://youtube.com/shorts/4V4JJ9rAFfs) | Lisbon | 11-14 19:50 | 1089 | 1225 | 1226 | 1226 | 7 | 0 | 93% | 0 |
-| [4](https://youtube.com/shorts/rctyQg0LibA) | Lake Atitlán | 11-14 07:50 | 216 | 454 | 457 | 458 | 5 | 0 | 71% | 0 |
-| [3](https://youtube.com/shorts/gVRSowdMoOo) | Cape Cod | 11-13 19:50 | 1096 | 1194 | 1193 | 1194 | 12 | 0 | 72% | 1 |
+| [24](https://youtube.com/shorts/hBgirIlkWf4) | Lake Como | 11-24 07:11 |  |  |  | 169 | 1 | 0 |  |  |
+| [23](https://youtube.com/shorts/2bR0OV9FuKA) | Panama Canal | 11-23 18:07 |  |  |  | 136 | 1 | 0 |  |  |
+| [22](https://youtube.com/shorts/CGqTOWsN3SU) | Mount Etna | 11-23 15:07 |  |  |  | 97 | 1 | 0 |  |  |
+| [21](https://youtube.com/shorts/byufVWM5ZGk) | Chicago | 11-22 19:50 | 354 |  |  | 354 | 3 | 0 |  |  |
+| [20](https://youtube.com/shorts/N1vZy2bjwmU) | Mount Pinatubo | 11-22 12:50 | 132 |  |  | 132 | 4 | 0 | 31% | 0 |
+| [19](https://youtube.com/shorts/z3ft32j0J0g) | Stromboli | 11-21 19:50 | 602 |  |  | 609 | 1 | 0 | 76% | 0 |
+| [18](https://youtube.com/shorts/5xNrv9am_NU) | Cancún | 11-21 12:50 | 216 | 216 |  | 216 | 0 | 0 | 148% | 0 |
+| [17](https://youtube.com/shorts/D9sqjMrVugg) | Paris | 11-20 19:51 | 411 | 467 |  | 467 | 5 | 0 | 72% | 0 |
+| [16](https://youtube.com/shorts/eXQABCGbTLw) | Valletta | 11-20 12:52 | 750 | 737 |  | 737 | 4 | 1 | 69% | 0 |
+| [15](https://youtube.com/shorts/6NzH3-lVnQw) | The World Islands | 11-19 19:54 | 276 | 326 |  | 327 | 4 | 0 | 105% | 0 |
+| [14](https://youtube.com/shorts/G5s8hVq_DpY) | Stockholm | 11-19 13:04 | 394 | 396 |  | 397 | 1 | 0 | 75% | 0 |
+| [13](https://youtube.com/shorts/fiZTzsE0NlE) | Lake Taupo | 11-18 20:02 | 353 | 415 |  | 417 | 4 | 0 | 73% | 0 |
+| [12](https://youtube.com/shorts/CfbN3QS-ZpA) | London | 11-18 12:57 | 963 | 958 |  | 960 | 7 | 0 | 70% | 1 |
+| [11](https://youtube.com/shorts/gUwVLgNn0QE) | San Francisco | 11-17 19:50 | 760 | 860 |  | 862 | 8 | 0 | 76% | 1 |
+| [10](https://youtube.com/shorts/O8BFDoSR5Ak) | Copenhagen | 11-17 07:52 | 722 | 722 | 724 | 724 | 4 | 1 | 142% | 1 |
+| [9](https://youtube.com/shorts/L3yeKWYTnR4) | Miami Beach | 11-16 19:50 | 910 | 977 | 978 | 978 | 12 | 2 | 77% | 0 |
+| [8](https://youtube.com/shorts/wUQrcldNysI) | Vancouver | 11-16 07:50 | 813 | 955 | 943 | 944 | 9 | 0 | 82% | 0 |
+| [7](https://youtube.com/shorts/47QAQ1mAxsc) | Santorini | 11-15 19:49 | 753 | 805 | 799 | 801 | 4 | 0 | 67% | 0 |
+| [6](https://youtube.com/shorts/npkO3GPVzz4) | Palm Jumeirah | 11-15 07:51 | 506 | 512 | 516 | 518 | 3 | 0 | 72% | 1 |
+| [5](https://youtube.com/shorts/4V4JJ9rAFfs) | Lisbon | 11-14 19:50 | 1089 | 1225 | 1226 | 1231 | 7 | 0 | 93% | 0 |
+| [4](https://youtube.com/shorts/rctyQg0LibA) | Lake Atitlán | 11-14 07:50 | 216 | 454 | 457 | 460 | 5 | 0 | 71% | 0 |
+| [3](https://youtube.com/shorts/gVRSowdMoOo) | Cape Cod | 11-13 19:50 | 1096 | 1194 | 1193 | 1198 | 12 | 0 | 72% | 1 |
 | [2](https://youtube.com/shorts/b3xgI6RyH4g) | Mount Kilimanjaro | 11-13 07:50 | 381 | 387 | 389 | 391 | 2 | 0 | 157% | 0 |
 | [1](https://youtube.com/shorts/18cfQg4Jl6A) | Great Blue Hole | 11-12 21:30 |  | 15 | 17 | 19 | 0 | 0 | 70% | 0 |
