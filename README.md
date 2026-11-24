@@ -266,3 +266,13 @@ Shorts は最後まで見られると頭からくり返される。くり返し�
 | Wait, That Big? | 10:23・22:23 | `23,53 10,22 * * *` |
 
 上に書かれた以前の時刻は経緯として残している。先の回が成功していれば、予備の回は posted_today.py が止める。
+
+## 通常動画の予告編の Short(2026-11-24〜、`make_video.teaser_plan`)
+
+通常動画(Guess From Space Challenge)を投稿してから3日以内の最初の Shorts の回を、その通常動画の予告編にする(週1本。本数は増やさない)。
+Wait, That Big? と同じ仕組み。
+
+- 通常動画の問題から1問(最初の2問と、Shorts に出したものは避ける)を、いつもの Shorts と同じ形で答えまで見せる
+- 最後の約2秒、上に「Place 3 of 12 · Guess From Space Challenge #1 / Play all 12 places!」の帯を重ね、最後の一言は「That was place N. Want M more? Tap the link to play the full challenge!」
+- 説明欄の1行目に通常動画のリンク。投稿記録の `teaser` に通常動画の番号が入る(同じ回の予告編は1本だけ)
+- **YouTube Studio で、その Short の「関連動画」に通常動画を設定する**(API ではできない。画面にタップできるリンクが出る)

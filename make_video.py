@@ -210,7 +210,7 @@ def script(place, labels, number=1):
         "lock": vary(number, "lock"),
         "ans": f"It's {P.spoken_name(place)}, {P.where(place)}!",
         # ひとこと(note)は読み上げず、画面に出すだけ(2026-11-21〜。答えのあとに離れる人が多かったので短くした)
-        "outro": vary(number, "outro", game),
+        "outro": place.get("_teaser", {}).get("outro") or vary(number, "outro", game),
     }
 
 
@@ -346,7 +346,10 @@ def build(place, labels, correct, tts, out, stem="quiz", number=1):
     p = subprocess.Popen(cmd, stdin=subprocess.PIPE)
     try:
         for f in range(frames):
-            p.stdin.write(frame(f / FPS).tobytes())
+            img = frame(f / FPS)
+            if OVERLAY is not None:          # 予告編の回(teaser_plan): 最後に通常動画への案内を重ねる
+                img = OVERLAY(img.convert("RGBA"), f / FPS, end).convert("RGB")
+            p.stdin.write(img.tobytes())
     finally:
         p.stdin.close()
     if p.wait() != 0:
@@ -481,12 +484,64 @@ def latest_long():
     return (pub[-1]["number"], f"https://youtu.be/{pub[-1]['video_id']}") if pub else None
 
 
+OVERLAY = None          # (img, t, end) -> img。予告編の回で、各コマに重ねる
+TEASER_DAYS = 3         # 通常動画を投稿してからこの日数のうちに、予告編の Short を1本出す
+
+
+def teaser_plan(history, now=None):
+    """(通常動画の番号, URL, 場所の key, 何問目, 問題の数) か None。
+    いちばん新しい通常動画を投稿してから TEASER_DAYS 日以内で、まだ予告編を出していなければ、その動画の場所から
+    1か所(最初の2問と、Shorts に出した場所は避ける)を選ぶ。Shorts と同じ形で答えまで見せ、最後に通常動画へ誘う。"""
+    now = now or datetime.now(timezone.utc)
+    try:
+        hist = json.loads((HERE / "longform_history.json").read_text() or "[]")
+    except (OSError, ValueError):
+        return None
+    hist = [h for h in hist if h.get("video_id")]
+    if not hist:
+        return None
+    lg = max(hist, key=lambda x: x["number"])
+    if any(h.get("teaser") == lg["number"] for h in history):
+        return None
+    if (now - datetime.fromisoformat(lg["uploaded_at"])).total_seconds() > TEASER_DAYS * 86400:
+        return None
+    used = {h["key"] for h in history}
+    keys = lg["keys"]
+    for i in sorted(range(len(keys)), key=lambda i: (i < 2, keys[i].startswith("game-"), i)):
+        if keys[i] not in used and any(P.key(p) == keys[i] for p in P.ALL_PLACES):
+            return lg["number"], f"https://youtu.be/{lg['video_id']}", keys[i], i + 1, len(keys)
+    return None
+
+
+def teaser_overlay(n_long, round_no, total, end_hint=None):
+    """冒頭の場面へ戻る直前の約2秒、上に「Place 4 of 12 · Guess From Space Challenge #1 / Play all 12 places!」。"""
+    l1 = text_layer([f"Place {round_no} of {total} · Guess From Space Challenge #{n_long}"], font(SANS_BOLD, 36), WHITE)
+    l2 = text_layer([f"Play all {total} places!"], font(SANS_BOLD, 64), GOLD)
+    hgt = l1.height + l2.height + 36
+    band = Image.new("RGBA", (W, hgt), (0, 0, 0, 0))
+    ImageDraw.Draw(band).rounded_rectangle([40, 0, W - 40, hgt], radius=28, fill=(10, 14, 24, 232),
+                                           outline=GOLD + (220,), width=4)
+    band.alpha_composite(l1, (0, 12))
+    band.alpha_composite(l2, (0, 12 + l1.height))
+
+    def overlay(img, t, end):
+        t1 = end - LOOP_SEC                          # 冒頭の場面に戻り始める時刻(ここで消す)
+        a = ease((t - (t1 - 2.4)) / 0.4) * (1 - ease((t - t1) / 0.3))
+        if a > 0:
+            img.alpha_composite(with_alpha(band, a), (0, 110))
+        return img
+    return overlay
+
+
 def youtube_meta(place, labels, correct, number):
     answer = labels[correct]
     game = place.get("game")
     lead = ("A real place from a famous video game, seen from space. Can you name it before the reveal? 🎮"
             if game else LEADS[number % len(LEADS)])
+    tz = place.get("_teaser")
     lines = [
+        *([f"▶️ This is place {tz['round']} of Guess From Space Challenge #{tz['long']}. "
+           f"Play all {tz['total']} places: {tz['url']}", ""] if tz else []),
         lead,
         "",
         "Choices: " + " / ".join(labels),
@@ -562,11 +617,21 @@ def main():
     history = load_history(args.history)
     number = max([h["number"] for h in history], default=0) + 1
     rng = random.Random(args.seed if args.seed is not None else number * 7919)
+    teaser = teaser_plan(history) if args.history and not args.place else None
+    if teaser:
+        print(f"予告編: Guess From Space Challenge #{teaser[0]} の {teaser[3]}問目 → {teaser[2]}")
+        args.place = teaser[2]
     if args.place:
         found = [p for p in P.ALL_PLACES if P.key(p) == args.place]
         if not found:
             raise SystemExit(f"場所が見つかりません: {args.place}(候補: {', '.join(P.key(p) for p in P.ALL_PLACES)})")
         place = found[0]
+        if teaser:
+            global OVERLAY
+            place = dict(place, _teaser={
+                "long": teaser[0], "url": teaser[1], "round": teaser[3], "total": teaser[4],
+                "outro": f"That was place {teaser[3]}. Want {teaser[4] - 1} more? Tap the link to play the full challenge!"})
+            OVERLAY = teaser_overlay(teaser[0], teaser[3], teaser[4])
     else:
         place = (number % GAME_EVERY == 0 and choose_game(history, rng)) or choose_place(history, rng)
     labels, correct = choices_for(place, rng)
@@ -586,6 +651,7 @@ def main():
             "ending": "loop_short",    # 最後に冒頭の場面へ戻り、ひとことを読み上げない短い版(2026-11-21〜。stats.md で比べる)
             "seconds": round(seconds, 2),
             "format": "game" if place.get("game") else "place",   # stats.md で、ゲームの舞台の回とふつうの回を比べる
+            "teaser": teaser[0] if teaser else None,   # 予告編の回なら通常動画の番号(teaser_plan が二度出さないため)
             **({"game": place["game"]} if place.get("game") else {}),
             "site": site_fields(place, labels, correct),
             **youtube_meta(place, labels, correct, number),

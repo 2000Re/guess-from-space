@@ -173,6 +173,7 @@ def main():
         "answer": meta["answer"],
         "title_style": meta.get("title_style"),
         "ending": meta.get("ending"),
+        "teaser": meta.get("teaser"),
         "video_id": video_id,
         "privacy": actual_privacy,
         "uploaded_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
