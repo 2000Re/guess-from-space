@@ -529,6 +529,22 @@ def build(args):
 
 
 THUMB_URL = "https://www.googleapis.com/upload/youtube/v3/thumbnails/set?videoId={}"
+PUBLISH_WEEKDAY = 6             # 予約投稿の曜日(月曜が 0)。日曜
+PUBLISH_TIME = (19, 13)            # 予約投稿の時刻(日本時間)
+
+
+def scheduled_publish(now=None):
+    """定期実行で作った回を公開する時刻(UTC の RFC3339)。GitHub の定期実行は数時間遅れることがあるので、
+    早めに作って非公開で上げ、この時刻に YouTube が公開する(publishAt)。もう間に合わなければ None(すぐ公開する)。"""
+    from datetime import timedelta
+    now = now or datetime.now(TZ)
+    if 1 <= (now.weekday() - PUBLISH_WEEKDAY) % 7 <= 2:      # 定期実行が日付をまたいで遅れた: 来週にせず、すぐ公開
+        return None
+    day = now.date() + timedelta(days=(PUBLISH_WEEKDAY - now.weekday()) % 7)
+    target = datetime(day.year, day.month, day.day, *PUBLISH_TIME, tzinfo=TZ)
+    if now > target - timedelta(minutes=10):
+        return None
+    return target.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def upload(args):
@@ -540,9 +556,14 @@ def upload(args):
     if any(h["number"] == meta["number"] for h in history):
         raise SystemExit(f"投稿済みの回です: #{meta['number']}")
     token = Y.connect()
-    res = Y.upload(token, out / meta["video"], meta, args.privacy)
+    publish_at = scheduled_publish() if args.schedule else None
+    if args.schedule and not publish_at:
+        print("予約の時刻を過ぎたので、すぐ公開します")
+    res = Y.upload(token, out / meta["video"], meta, args.privacy, publish_at)
     vid = res["id"]
-    privacy = res.get("status", {}).get("privacyStatus", args.privacy)
+    privacy = "public" if publish_at else res.get("status", {}).get("privacyStatus", args.privacy)
+    if publish_at:
+        print(f"予約投稿: {publish_at} に公開")
     print(f"uploaded: https://youtu.be/{vid} ({privacy})")
     Y.set_output("video_id", vid)
     thumb = out / meta.get("thumbnail", "thumbnail.jpg")
@@ -556,7 +577,7 @@ def upload(args):
             print(f"警告: サムネイルを設定できませんでした(YouTube Studio で設定してください): {detail}", file=sys.stderr)
     history.append({
         "number": meta["number"], "keys": meta["keys"], "date": meta["date"], "title": meta["title"],
-        "seconds": meta["seconds"], "video_id": vid, "privacy": privacy,
+        "seconds": meta["seconds"], "video_id": vid, "privacy": privacy, "publish_at": publish_at,
         "uploaded_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     })
     hist_path.write_text(json.dumps(history, ensure_ascii=False, indent=2) + "\n")
@@ -574,6 +595,7 @@ def main():
     ap.add_argument("--upload", action="store_true", help="--dir の動画を投稿して記録する")
     ap.add_argument("--dir", default="out_long")
     ap.add_argument("--privacy", default="public", choices=["public", "unlisted", "private"])
+    ap.add_argument("--schedule", action="store_true", help="予約投稿にする(定期実行。scheduled_publish の時刻に公開)")
     args = ap.parse_args()
     if args.upload:
         upload(args)
