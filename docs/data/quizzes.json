@@ -430,5 +430,23 @@
   ],
   "answer": 2,
   "image": "img/24-lake-como.jpg"
+ },
+ {
+  "number": 25,
+  "slug": "25-manicouagan-reservoir",
+  "video_id": "tlHaCH7mXFU",
+  "uploaded_at": "2026-11-24T10:07:10+00:00",
+  "name": "Manicouagan Reservoir",
+  "country": "Canada",
+  "note": "A ring-shaped lake in an ancient impact crater",
+  "lon": -68.7,
+  "lat": 51.38,
+  "choices": [
+   "Crater Lake",
+   "Lake Toba",
+   "Manicouagan Reservoir"
+  ],
+  "answer": 2,
+  "image": "img/25-manicouagan-reservoir.jpg"
  }
 ]
