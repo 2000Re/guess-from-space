@@ -448,5 +448,23 @@
   ],
   "answer": 2,
   "image": "img/25-manicouagan-reservoir.jpg"
+ },
+ {
+  "number": 26,
+  "slug": "26-rio-de-janeiro",
+  "video_id": "M7JnULvqegI",
+  "uploaded_at": "2026-11-24T21:07:30+00:00",
+  "name": "Rio de Janeiro",
+  "country": "Brazil",
+  "note": "Its mountain-and-sea landscape is a UNESCO World Heritage Site",
+  "lon": -43.1566,
+  "lat": -22.9486,
+  "choices": [
+   "Cape Town",
+   "Rio de Janeiro",
+   "Hong Kong"
+  ],
+  "answer": 1,
+  "image": "img/26-rio-de-janeiro.jpg"
  }
 ]
