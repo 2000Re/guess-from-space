@@ -289,5 +289,18 @@
     "video_id": "M7JnULvqegI",
     "privacy": "public",
     "uploaded_at": "2026-11-24T21:07:30+00:00"
+  },
+  {
+    "number": 27,
+    "key": "new-orleans",
+    "date": "2026-11-25",
+    "title": "[27] Guess the place from this satellite photo 🌍",
+    "answer": "New Orleans",
+    "title_style": "photo",
+    "ending": "loop_short",
+    "teaser": null,
+    "video_id": "sg62Uxx7nqw",
+    "privacy": "public",
+    "uploaded_at": "2026-11-25T09:07:50+00:00"
   }
 ]

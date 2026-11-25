@@ -466,5 +466,23 @@
   ],
   "answer": 1,
   "image": "img/26-rio-de-janeiro.jpg"
+ },
+ {
+  "number": 27,
+  "slug": "27-new-orleans",
+  "video_id": "sg62Uxx7nqw",
+  "uploaded_at": "2026-11-25T09:07:50+00:00",
+  "name": "New Orleans",
+  "country": "United States",
+  "note": "Built on a bend of the Mississippi River",
+  "lon": -90.06,
+  "lat": 29.95,
+  "choices": [
+   "Memphis",
+   "New Orleans",
+   "St. Louis"
+  ],
+  "answer": 1,
+  "image": "img/27-new-orleans.jpg"
  }
 ]
