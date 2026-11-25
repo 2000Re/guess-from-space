@@ -484,5 +484,23 @@
   ],
   "answer": 1,
   "image": "img/27-new-orleans.jpg"
+ },
+ {
+  "number": 28,
+  "slug": "28-istanbul",
+  "video_id": "9-PwC53H1IU",
+  "uploaded_at": "2026-11-25T21:07:13+00:00",
+  "name": "Istanbul",
+  "country": "Turkey",
+  "note": "Assassin's Creed Revelations (2011) is set here, as Constantinople",
+  "lon": 28.9784,
+  "lat": 41.0082,
+  "choices": [
+   "Lisbon",
+   "Istanbul",
+   "Naples"
+  ],
+  "answer": 1,
+  "image": "img/28-istanbul.jpg"
  }
 ]
