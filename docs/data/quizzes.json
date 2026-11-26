@@ -520,5 +520,23 @@
   ],
   "answer": 2,
   "image": "img/29-mount-teide.jpg"
+ },
+ {
+  "number": 30,
+  "slug": "30-las-vegas",
+  "video_id": "NMB09PVZJjg",
+  "uploaded_at": "2026-11-26T21:08:28+00:00",
+  "name": "Las Vegas",
+  "country": "United States",
+  "note": "Famous for the Las Vegas Strip",
+  "lon": -115.17,
+  "lat": 36.115,
+  "choices": [
+   "Las Vegas",
+   "Phoenix",
+   "Dubai"
+  ],
+  "answer": 0,
+  "image": "img/30-las-vegas.jpg"
  }
 ]

@@ -328,5 +328,18 @@
     "video_id": "OF0dwg8brig",
     "privacy": "public",
     "uploaded_at": "2026-11-26T09:07:52+00:00"
+  },
+  {
+    "number": 30,
+    "key": "las-vegas",
+    "date": "2026-11-27",
+    "title": "[30] Zoom out and guess the place 🌍",
+    "answer": "Las Vegas",
+    "title_style": "zoom",
+    "ending": "loop_short",
+    "teaser": null,
+    "video_id": "NMB09PVZJjg",
+    "privacy": "public",
+    "uploaded_at": "2026-11-26T21:08:28+00:00"
   }
 ]
