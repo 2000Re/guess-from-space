@@ -502,5 +502,23 @@
   ],
   "answer": 1,
   "image": "img/28-istanbul.jpg"
+ },
+ {
+  "number": 29,
+  "slug": "29-mount-teide",
+  "video_id": "OF0dwg8brig",
+  "uploaded_at": "2026-11-26T09:07:52+00:00",
+  "name": "Mount Teide",
+  "country": "Spain",
+  "note": "Teide National Park is a UNESCO World Heritage Site",
+  "lon": -16.6421,
+  "lat": 28.2724,
+  "choices": [
+   "Mount Etna",
+   "Mount Pico",
+   "Mount Teide"
+  ],
+  "answer": 2,
+  "image": "img/29-mount-teide.jpg"
  }
 ]
