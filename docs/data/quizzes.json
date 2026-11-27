@@ -556,5 +556,23 @@
   ],
   "answer": 2,
   "image": "img/31-sakurajima.jpg"
+ },
+ {
+  "number": 32,
+  "slug": "32-kilauea",
+  "video_id": "T640LGxrvio",
+  "uploaded_at": "2026-11-27T21:07:31+00:00",
+  "name": "Kīlauea",
+  "country": "United States",
+  "note": "Inside Hawaiʻi Volcanoes National Park, a UNESCO World Heritage Site",
+  "lon": -155.28,
+  "lat": 19.41,
+  "choices": [
+   "Mauna Kea",
+   "Kīlauea",
+   "Mount Etna"
+  ],
+  "answer": 1,
+  "image": "img/32-kilauea.jpg"
  }
 ]

@@ -354,5 +354,18 @@
     "video_id": "e6pevx6LTzA",
     "privacy": "public",
     "uploaded_at": "2026-11-27T09:07:20+00:00"
+  },
+  {
+    "number": 32,
+    "key": "kilauea",
+    "date": "2026-11-28",
+    "title": "[32] Geography pros: where on Earth is this? 🌍",
+    "answer": "Kīlauea",
+    "title_style": "pros",
+    "ending": "loop_short",
+    "teaser": null,
+    "video_id": "T640LGxrvio",
+    "privacy": "public",
+    "uploaded_at": "2026-11-27T21:07:31+00:00"
   }
 ]
