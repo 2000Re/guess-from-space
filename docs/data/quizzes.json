@@ -538,5 +538,23 @@
   ],
   "answer": 0,
   "image": "img/30-las-vegas.jpg"
+ },
+ {
+  "number": 31,
+  "slug": "31-sakurajima",
+  "video_id": "e6pevx6LTzA",
+  "uploaded_at": "2026-11-27T09:07:20+00:00",
+  "name": "Sakurajima",
+  "country": "Japan",
+  "note": "One of Japan's most active volcanoes",
+  "lon": 130.657,
+  "lat": 31.585,
+  "choices": [
+   "Mount Vesuvius",
+   "Stromboli",
+   "Sakurajima"
+  ],
+  "answer": 2,
+  "image": "img/31-sakurajima.jpg"
  }
 ]
