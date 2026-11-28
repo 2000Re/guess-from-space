@@ -574,5 +574,23 @@
   ],
   "answer": 1,
   "image": "img/32-kilauea.jpg"
+ },
+ {
+  "number": 33,
+  "slug": "33-krakatoa",
+  "video_id": "Mophk8aHCXI",
+  "uploaded_at": "2026-11-28T09:07:55+00:00",
+  "name": "Krakatoa",
+  "country": "Indonesia",
+  "note": "Famous for its huge eruption in 1883",
+  "lon": 105.423,
+  "lat": -6.102,
+  "choices": [
+   "Taal Volcano",
+   "Krakatoa",
+   "Stromboli"
+  ],
+  "answer": 1,
+  "image": "img/33-krakatoa.jpg"
  }
 ]

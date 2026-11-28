@@ -367,5 +367,18 @@
     "video_id": "T640LGxrvio",
     "privacy": "public",
     "uploaded_at": "2026-11-27T21:07:31+00:00"
+  },
+  {
+    "number": 33,
+    "key": "krakatoa",
+    "date": "2026-11-28",
+    "title": "[33] Can you name this place in 5 seconds? 🛰️",
+    "answer": "Krakatoa",
+    "title_style": "five_seconds",
+    "ending": "loop_short",
+    "teaser": null,
+    "video_id": "Mophk8aHCXI",
+    "privacy": "public",
+    "uploaded_at": "2026-11-28T09:07:55+00:00"
   }
 ]
